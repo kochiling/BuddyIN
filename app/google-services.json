@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862781044791",
+    "project_id": "buddyin-70",
+    "storage_bucket": "buddyin-70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862781044791:android:08e7322d8f4f08f14867b2",
+        "android_client_info": {
+          "package_name": "com.cscorner.buddyin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxlo9-ZoYRgEFDPdSVJ4SUlbTPrLra70k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

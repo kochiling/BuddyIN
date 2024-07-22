@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RegisterActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple"
+        android:elevation="0dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="15dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/horizontal_transparent_logo3"
+                tools:ignore="ContentDescription,HardcodedText">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/personal_information"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/name"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/usernameinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/username"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ageinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:inputType="number"
+                    android:hint="@string/age"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <AutoCompleteTextView
+                    android:id="@+id/genderinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/gender"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <AutoCompleteTextView
+                    android:id="@+id/courseinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/course_studied"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/seniorinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/seniority_example_year_1"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <MultiAutoCompleteTextView
+                    android:id="@+id/hobbiesinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/hobbies"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/personalitiesinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/personalities"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="60dp"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/unatinalityinput"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/nationality"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/terms_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                android:text="@string/i_agree_to_the_terms_and_conditions"
+                tools:ignore="TextContrastCheck"
+                android:buttonTint="@color/white"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/registerbtn"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="55dp"
+                android:backgroundTint="@color/red_btn"
+                android:shadowColor="@color/black"
+                android:text="@string/register"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:elevation="20dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</LinearLayout>
