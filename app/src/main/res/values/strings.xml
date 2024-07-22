@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">BuddyIN</string>
+
+    <string name="login">Login Page</string>
+    <string name="email">Email Address :</string>
+    <string name="password">Password :</string>
+    <string name="log_in">Log In</string>
+    <string name="create_a_new_account"><u>Create A New Account?</u></string>
+    <string name="forget_password"><u> Forget Password? </u></string>
+    <string name="confirm_password">Confirm Password :</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_have_an_account"><u> Already Have An Account? </u></string>
+    <string name="home">Home</string>
+    <string name="buddy">Buddy</string>
+    <string name="chatbot">Chatbot</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="hobbies">Hobbies</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="gender">Gender</string>
+    <string name="course_studied">Course Studied</string>
+    <string name="seniority_example_year_1">Seniority(Example :Year 1)</string>
+    <string name="personalities">Personalities</string>
+    <string name="nationality">Nationality</string>
+    <string name="i_agree_to_the_terms_and_conditions">I agree to the Terms and Conditions</string>
+    <string name="register">Register</string>
+    <string name="age">Age</string>
+    <string name="notes_by_subject">Notes By Subject</string>
+
 </resources>

@@ -3,7 +3,15 @@
     <style name="Base.Theme.BuddyIN" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary"> @color/purple</item>
+        <item name="colorOnPrimary"> @color/white</item>
+        <item name="colorPrimaryVariant"> @color/purple_dark</item>
+
+
+
+
     </style>
 
     <style name="Theme.BuddyIN" parent="Base.Theme.BuddyIN" />
+    
 </resources>
