@@ -29,5 +29,11 @@
     <string name="register">Register</string>
     <string name="age">Age</string>
     <string name="notes_by_subject">Notes By Subject</string>
+    <string name="xxxxx">xxxxx</string>
+    <string name="this_is_a_post">This is a post</string>
+    <string name="_5002cem">5002CEM</string>
+    <string name="buddy_chat">Buddy Chat</string>
+    <string name="buddy_list">Buddy List</string>
+    <string name="edit">Edit</string>
 
 </resources>

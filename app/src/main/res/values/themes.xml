@@ -7,11 +7,13 @@
         <item name="colorOnPrimary"> @color/white</item>
         <item name="colorPrimaryVariant"> @color/purple_dark</item>
 
-
-
-
     </style>
 
     <style name="Theme.BuddyIN" parent="Base.Theme.BuddyIN" />
-    
+
+    <style name="roundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>
