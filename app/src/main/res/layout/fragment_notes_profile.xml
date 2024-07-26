@@ -3,16 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuddyChatFragment">
+    tools:context=".NotesProfileFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/buddy_chat_rv"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/my_buddy_item">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

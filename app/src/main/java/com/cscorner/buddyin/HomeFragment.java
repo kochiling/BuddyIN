@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.widget.Button;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,8 @@ public class HomeFragment extends Fragment {
     List<SubjectClass> subList;
     SubjectAdapter adapter;
     FloatingActionButton addButton;
+    Button viewallbtn;
+
 
 
     @Nullable
@@ -80,8 +83,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        viewallbtn = view.findViewById(R.id.viewall);
+        viewallbtn.setOnClickListener((View v) -> {
+            Intent intent = new Intent(getContext(), NotesSubjectActivity.class);
+            startActivity(intent);
+        });
         return view;
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -97,7 +104,6 @@ public class HomeFragment extends Fragment {
         // Notify the adapter about the data changes
         adapter.notifyDataSetChanged();
     }
-
     // Other methods of the HomeFragment
 }
 
