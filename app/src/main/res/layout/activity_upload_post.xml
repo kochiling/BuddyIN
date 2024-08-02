@@ -81,7 +81,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
-            android:text="Click here to upload an image"
+            android:text="@string/click_here_to_upload_an_image"
             android:textColor="@color/black" />
 
         <ImageButton
@@ -92,7 +92,7 @@
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
             android:background="@color/transparent"
-            android:contentDescription="Click here to upload an image"
+            android:contentDescription="@string/click_here_to_upload_an_image"
             android:scaleX="2.5"
             android:scaleY="2.5"
             android:src="@drawable/baseline_image_24" />

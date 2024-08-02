@@ -36,5 +36,6 @@
     <string name="buddy_list">Buddy List</string>
     <string name="edit">Edit</string>
     <string name="enter_text">Enter Text</string>
+    <string name="click_here_to_upload_an_image">Click here to upload an image</string>
 
 </resources>

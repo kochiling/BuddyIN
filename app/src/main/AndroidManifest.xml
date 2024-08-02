@@ -13,10 +13,10 @@
         android:theme="@style/Theme.BuddyIN"
         tools:targetApi="31">
         <activity
-            android:name=".SubjectFilterActivity"
+            android:name=".SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".SubjectFilter_Activity"
+            android:name=".SubjectFilterActivity"
             android:exported="false" />
         <activity
             android:name=".NotesSubjectActivity"

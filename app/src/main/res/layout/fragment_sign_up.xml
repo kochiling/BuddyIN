@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginTop="70dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="TODO"
             android:src="@drawable/vertical_transparent_logo"
             tools:ignore="ContentDescription,HardcodedText" />
@@ -29,28 +29,32 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:gravity="start"
             android:text="@string/email"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailinputlayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="310dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             app:boxBackgroundColor="@color/pink_box"
-            android:layout_marginStart="40dp">
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/baseline_email_24"
+            app:startIconTint="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailinput"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginBottom="15dp"
                 android:hint="email@gmail.com"
                 android:textColor="@color/black"
                 tools:ignore="HardcodedText,TextContrastCheck" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -58,35 +62,43 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
             android:gravity="start"
             android:text="@string/password"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordinputlayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="310dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             app:boxBackgroundColor="@color/pink_box"
-            android:layout_marginStart="40dp">
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/purple"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/baseline_lock_24"
+            app:startIconTint="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordinput"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
                 android:hint="password"
+                android:inputType="textPassword"
                 android:textColor="@color/black"
                 android:textColorHint="#AB47BC"
                 tools:ignore="HardcodedText,TextContrastCheck" />
+
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="1dp"
             android:layout_marginBottom="5dp"
             android:gravity="start"
             android:text="@string/confirm_password"
@@ -94,22 +106,27 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirminputlayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="310dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="15dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="0dp"
             app:boxBackgroundColor="@color/pink_box"
-            android:layout_marginStart="40dp">
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/purple"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirminput"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
                 android:hint="confirm password"
+                android:inputType="textPassword"
                 android:textColorHint="#AB47BC"
                 tools:ignore="HardcodedText,TextContrastCheck" />
+
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -117,7 +134,7 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:backgroundTint="@color/red_btn"
             android:shadowColor="@color/black"
             android:text="@string/sign_up"
@@ -135,6 +152,12 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             tools:ignore="TextSizeCheck" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
