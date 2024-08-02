@@ -38,17 +38,19 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="310dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             app:boxBackgroundColor="@color/pink_box"
             android:layout_marginStart="40dp"
-            app:boxStrokeColor="@color/purple">
+            app:boxStrokeColor="@color/purple"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/baseline_email_24"
+            app:startIconTint="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailinput"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginBottom="15dp"
                 android:hint="email@gmail.com"
                 android:textColor="@color/black"
                 tools:ignore="HardcodedText,TextContrastCheck" />
@@ -68,15 +70,19 @@
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="310dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             app:boxBackgroundColor="@color/pink_box"
-            android:layout_marginStart="40dp">
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/purple"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/baseline_lock_24"
+            app:startIconTint="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordinput"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
                 android:hint="password"
                 android:textColor="@color/black"
                 android:textColorHint="#AB47BC"

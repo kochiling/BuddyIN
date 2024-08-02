@@ -49,7 +49,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setFragment(new SignUpFragment());
-
+                //Intent intent = new Intent(requireActivity(), RegisterActivity.class);
+                //startActivity(intent);
             }
         });
 

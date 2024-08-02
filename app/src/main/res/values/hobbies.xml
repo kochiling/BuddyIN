@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hobbies">
+        <item>Writing</item>
+        <item>Dance</item>
+        <item>Gardening</item>
+        <item>Photography</item>
+        <item>Baking</item>
+        <item>Hiking</item>
+        <item>Painting</item>
+        <item>Reading</item>
+        <item>Yoga</item>
+        <item>Calligraphy</item>
+        <item>Drawing</item>
+        <item>Scrapbook</item>
+        <item>Blogging</item>
+        <item>Candle making</item>
+        <item>Cooking</item>
+        <item>Golf</item>
+        <item>Knitting</item>
+        <item>Pottery</item>
+        <item>Art</item>
+        <item>Camping</item>
+        <item>Running</item>
+        <item>Sports</item>
+        <item>Rock climbing</item>
+        <item>Volunteering</item>
+        <item>Vlogging</item>
+        <item>Video production</item>
+        <item>Origami</item>
+        <item>Web design</item>
+        <item>Travelling</item>
+        <item>Others</item>
+
+    </string-array>
+</resources>

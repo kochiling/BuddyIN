@@ -48,6 +48,19 @@
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/upload_pics"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/click_here_to_upload_an_image"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:src="@drawable/baseline_image_24"
+                tools:ignore="RedundantDescriptionCheck" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="310dp"
@@ -171,6 +184,32 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="310dp"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/hobbiesinput"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="@string/hobbies"
+                    android:textColor="@color/black"
+                    android:lines="3"
+                    android:minLines="1"
+                    android:inputType="textMultiLine|none"
+                    tools:ignore="TextContrastCheck"
+                    android:focusable="false"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="310dp"
                 android:layout_height="60dp"
@@ -180,26 +219,6 @@
                 app:boxStrokeColor="@color/purple">
 
                 <MultiAutoCompleteTextView
-                    android:id="@+id/hobbiesinput"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginBottom="15dp"
-                    android:hint="@string/hobbies"
-                    android:textColor="@color/black"
-                    tools:ignore="TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
-                android:layout_height="60dp"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple">
-
-                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/personalitiesinput"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
@@ -208,10 +227,11 @@
                     android:hint="@string/personalities"
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="310dp"
                 android:layout_height="60dp"
                 app:boxBackgroundColor="@color/pink_box"
@@ -219,8 +239,8 @@
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/unatinalityinput"
+                <AutoCompleteTextView
+                    android:id="@+id/nationalityinput"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
@@ -229,6 +249,7 @@
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/terms_checkbox"
@@ -257,7 +278,5 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 </LinearLayout>

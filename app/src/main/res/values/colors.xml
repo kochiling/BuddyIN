@@ -7,6 +7,9 @@
     <color name="transparent">#00ffffff</color>
     <color name="purple">#995CB8</color>
     <color name="purple_dark">#6F40A6</color>
+    <color name="blue">#3A58FF</color>
+    <color name="pink_btn">#FBCAFF</color>
+
 
 
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string-array name="coursesinput">
+        <item>Cambridge A-Level (CAL)</item>
+        <item>Foundation in Science</item>
+        <item>Foundation in Business</item>
+        <item>Foundation in Information Technology</item>
+
+        <item>Certificate in Information Technology</item>
+        <item>Diploma in Information Technology</item>
+        <item>Diploma in Computer Science</item>
+        <item>3+0 BSc (Hons) in Computer Science (in collaboration with Coventry University, UK)</item>
+        <item>3+0 BSc (Hons) in Computing (in collaboration with Coventry University, UK)</item>
+
+        <item>Diploma in Electrical &amp; Electronic Engineering</item>
+        <item>Diploma in Mechanical Engineering</item>
+        <item>3+0 BE (Hons) in Electrical &amp; Electronic Engineering (in collaboration with Coventry University, UK)</item>
+        <item>3+0 BE (Hons) in Computer Hardware and Software Engineering (in collaboration with Coventry University, UK</item>
+        <item>3+0 BE (Hons) in Mechanical Engineering (in collaboration with Coventry University, UK)</item>
+
+        <item>Diploma in Finance</item>
+        <item>New South Wales TAFE Advanced Diploma in Accounting</item>
+        <item>BA (Hons) Accounting &amp; Finance (3+0) in collaboration with University of Hertfordshire, UK</item>
+        <item>Bachelor of Business (3+0) in collaboration with Swinburne University of Technology, Australia</item>
+
+        <item>Certificate in Business Studies</item>
+        <item>Diploma in Business</item>
+        <item>Diploma in Business Management (Flexible Learning)</item>
+        <item>Diploma in Entrepreneurship</item>
+        <item>Diploma in Marketing</item>
+        <item>Diploma in E- Commerce</item>
+        <item>BA (Hons) Business Administration (3+0) in collaboration with University of Hertfordshire, UK</item>
+        <item>Bachelor of Business (3+0) in collaboration with Swinburne University of Technology, Australia</item>
+
+        <item>Diploma in Mass Communication</item>
+        <item>Diploma in Digital Media</item>
+        <item>BA (Hons) Mass Communication (3+0) in collaboration with University of Hertfordshire,UK</item>
+        <item>Bachelor of Media Communication (3+0) in collaboration with Swinburne University of Technology, Australia</item>
+
+        <item>Diploma in Hotel Management</item>
+        <item>Diploma in Culinary Arts</item>
+        <item>BA (Hons) Event Management &amp; Marketing (3+0) in collaboration with University of Hertfordshire, UK</item>
+        <item>American Degree Transfer Program</item>
+        <item>Australia Degree Transfer Program</item>
+        <item>Bachelor of Arts in Psychology (4+0) in collaboration with Southern New Hampshire University, USA</item>
+
+    </string-array>
+
+</resources>
