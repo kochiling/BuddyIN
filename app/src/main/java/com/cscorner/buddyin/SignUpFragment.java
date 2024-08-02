@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +56,9 @@ public class SignUpFragment extends Fragment {
         emailinputlayout = view.findViewById(R.id.emailinputlayout);
         passwordinputlayout = view.findViewById(R.id.passwordinputlayout);
         confirminputlayout = view.findViewById(R.id.confirminputlayout);
+
+
+
         return view;
     }
 
@@ -77,65 +83,84 @@ public class SignUpFragment extends Fragment {
 
     }
 
-    private void createAccount() {
-        //validate to check if email is empty
-        progressBar.setVisibility(View.VISIBLE);
-        String email, password, passwordconfirm;
-        email = Objects.requireNonNull(emailinput.getText()).toString().trim();
-        password = Objects.requireNonNull(passwordinput.getText()).toString().trim();
-        passwordconfirm = Objects.requireNonNull(confirminput.getText()).toString().trim();
-
+    private boolean validateEmail(String email) {
         if (email.isEmpty()) {
-            progressBar.setVisibility(View.GONE);
             emailinputlayout.setError("Email address is required!");
             Toast.makeText(getActivity(), "Email address is required!", Toast.LENGTH_SHORT).show();
-            emailinput.findViewById(R.id.emailinput).requestFocus();
-        }
-        else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            progressBar.setVisibility(View.GONE);
+            emailinput.requestFocus();
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailinputlayout.setError("Email address is invalid!");
             Toast.makeText(getActivity(), "Email address is invalid!", Toast.LENGTH_SHORT).show();
-            emailinput.findViewById(R.id.emailinput).requestFocus();
-        }
-        else if (password.isEmpty()) {
-            progressBar.setVisibility(View.GONE);
-            passwordinputlayout.setError("Password is required!");
-            Toast.makeText(getActivity(), "Password is required!", Toast.LENGTH_SHORT).show();
-            passwordinput.findViewById(R.id.passwordinput).requestFocus();
-        }
-        else if (password.length() < 6) {
-            progressBar.setVisibility(View.GONE);
-            passwordinputlayout.setError("Password should be at least 6 characters!");
-            Toast.makeText(getActivity(), "Password should be at least 6 characters!", Toast.LENGTH_SHORT).show();
-            passwordinput.findViewById(R.id.passwordinput).requestFocus();
-        }
-        else if (passwordconfirm.isEmpty()) {
-            progressBar.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "Confirm password is required!", Toast.LENGTH_SHORT).show();
-            confirminput.findViewById(R.id.confirminput).requestFocus();
-        }
-        else if (!passwordconfirm.equals(password)) {
-            progressBar.setVisibility(View.GONE);
-            Toast.makeText(getActivity(), "Both of the password must be same", Toast.LENGTH_SHORT).show();
-            confirminput.findViewById(R.id.confirminput).requestFocus();
+            emailinput.requestFocus();
+            return false;
         } else {
-            // For non-admin users, attempt to create an account
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getActivity(), "Account Created", Toast.LENGTH_SHORT).show();
-                            // Redirect to the PersonalInformation class
-                            Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                            startActivity(intent);
-                            onDestroy();
-                        } else {
-                            Toast.makeText(getActivity(), "Authentication Failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            emailinputlayout.setError(null);
+            return true;
         }
     }
+
+
+
+    private boolean validatePassword(String password) {
+        if (password.isEmpty()) {
+            passwordinputlayout.setError("Password is required!");
+            Toast.makeText(getActivity(), "Password is required!", Toast.LENGTH_SHORT).show();
+            passwordinput.requestFocus();
+            return false;
+        } else if (password.length() < 6) {
+            passwordinputlayout.setError("Password should be at least 6 characters!");
+            Toast.makeText(getActivity(), "Password should be at least 6 characters!", Toast.LENGTH_SHORT).show();
+            passwordinput.requestFocus();
+            return false;
+        } else {
+            passwordinputlayout.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePasswordConfirmation(String password, String passwordConfirm) {
+        if (passwordConfirm.isEmpty()) {
+            confirminputlayout.setError("Confirm password is required!");
+            Toast.makeText(getActivity(), "Confirm password is required!", Toast.LENGTH_SHORT).show();
+            confirminput.requestFocus();
+            return false;
+        } else if (!passwordConfirm.equals(password)) {
+            confirminputlayout.setError("Both passwords must be the same");
+            Toast.makeText(getActivity(), "Both passwords must be the same", Toast.LENGTH_SHORT).show();
+            confirminput.requestFocus();
+            return false;
+        } else {
+            confirminputlayout.setError(null);
+            return true;
+        }
+    }
+
+    private void createAccount() {
+        progressBar.setVisibility(View.VISIBLE);
+        String email = Objects.requireNonNull(emailinput.getText()).toString().trim();
+        String password = Objects.requireNonNull(passwordinput.getText()).toString().trim();
+        String passwordconfirm = Objects.requireNonNull(confirminput.getText()).toString().trim();
+
+        if (!validateEmail(email) || !validatePassword(password) || !validatePasswordConfirmation(password, passwordconfirm)) {
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    progressBar.setVisibility(View.GONE);
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getActivity(), "Account Created", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    } else {
+                        Toast.makeText(getActivity(), "Authentication Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     private void setFragment (Fragment fragment){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -143,3 +168,4 @@ public class SignUpFragment extends Fragment {
         fragmentTransaction.commit();
     }
 }
+

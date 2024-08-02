@@ -76,6 +76,7 @@
             android:layout_marginStart="40dp"
             app:boxBackgroundColor="@color/pink_box"
             app:endIconMode="password_toggle"
+            app:endIconDrawable="@drawable/baseline_visibility_24"
             app:endIconTint="@color/purple"
             app:errorEnabled="true"
             app:startIconDrawable="@drawable/baseline_lock_24"
@@ -114,6 +115,7 @@
             android:layout_marginBottom="0dp"
             app:boxBackgroundColor="@color/pink_box"
             app:endIconMode="password_toggle"
+            app:endIconDrawable="@drawable/baseline_visibility_24"
             app:endIconTint="@color/purple"
             app:errorEnabled="true">
 
