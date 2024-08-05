@@ -21,6 +21,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/logout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/baseline_logout_24"
+            android:contentDescription="Log Out"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="fitXY"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hlinear"
             android:layout_width="match_parent"

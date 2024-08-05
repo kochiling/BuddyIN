@@ -44,7 +44,8 @@
             app:boxStrokeColor="@color/purple"
             app:errorEnabled="true"
             app:startIconDrawable="@drawable/baseline_email_24"
-            app:startIconTint="@color/purple">
+            app:startIconTint="@color/purple"
+            android:id="@+id/emailinputlayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailinput"
@@ -77,7 +78,8 @@
             app:endIconTint="@color/purple"
             app:errorEnabled="true"
             app:startIconDrawable="@drawable/baseline_lock_24"
-            app:startIconTint="@color/purple">
+            app:startIconTint="@color/purple"
+            android:id="@+id/passwordinputlayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordinput"
@@ -126,6 +128,12 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             tools:ignore="TextSizeCheck" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
