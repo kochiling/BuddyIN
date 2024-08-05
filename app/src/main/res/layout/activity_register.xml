@@ -236,7 +236,9 @@
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck"
                     android:lines="3"
-                    android:minLines="1"/>
+                    android:minLines="1"
+                    android:inputType="textMultiLine|none"
+                    android:focusable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

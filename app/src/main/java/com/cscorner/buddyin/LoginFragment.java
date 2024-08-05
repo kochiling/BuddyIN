@@ -73,9 +73,9 @@ public class LoginFragment extends Fragment {
         createAccbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(new SignUpFragment());
-                //Intent intent = new Intent(requireActivity(), RegisterActivity.class);
-                //startActivity(intent);
+                //setFragment(new SignUpFragment());
+                Intent intent = new Intent(requireActivity(), RegisterActivity.class);
+                startActivity(intent);
             }
         });
 
