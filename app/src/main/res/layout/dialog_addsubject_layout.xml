@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="@color/pink_box"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="40dp"
+        app:boxStrokeColor="@color/purple"
+        android:id="@+id/subjectcodeinputlayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/subjectcodeinput"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:hint="Subject Code"
+            android:textColor="@color/black"
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/subjectnameinputlayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subjectcodeinputlayout"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="25dp"
+        app:boxBackgroundColor="@color/pink_box"
+        app:boxStrokeColor="@color/purple">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/subjectnameinput"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:hint="Subject Name"
+            android:textColor="@color/black"
+            tools:ignore="TextContrastCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.cscorner.buddyin;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class SubjectFilterActivity extends AppCompatActivity {
+
+    TextView subjectTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +23,9 @@ public class SubjectFilterActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        subjectTextView = findViewById(R.id.subjectText);
+        String subject = getIntent().getStringExtra("subject");
+        subjectTextView.setText(subject);
     }
 }

@@ -222,7 +222,6 @@ public class RegisterActivity extends AppCompatActivity {
         personalitiesinput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // Initialize alert dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                 // set title
@@ -300,7 +299,6 @@ public class RegisterActivity extends AppCompatActivity {
                         personalitiesinput.setText("");
                     }
                 });
-
                 // show dialog
                 builder.show();
             }
