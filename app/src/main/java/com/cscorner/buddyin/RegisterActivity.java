@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,7 +13,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
 import android.content.DialogInterface;
@@ -60,6 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
     ArrayList<Integer> hobbiesList = new ArrayList<>();
     String[] hobbiesArray;
 
+    boolean[] selectedpersonalites;
+    ArrayList<Integer> personalityList = new ArrayList<>();
+    String[] personalityArray;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -212,6 +213,97 @@ public class RegisterActivity extends AppCompatActivity {
                 builder.show();
             }
         });
+
+        //Personality Spinner
+        personalityArray = getResources().getStringArray(R.array.personalities);
+        // initialize selected array
+        selectedpersonalites = new boolean[personalityArray.length];
+
+        personalitiesinput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Initialize alert dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                // set title
+                builder.setTitle("Select Personalities");
+                // set dialog non cancelable
+                builder.setCancelable(false);
+
+                builder.setMultiChoiceItems(personalityArray, selectedpersonalites, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+                        // check condition
+                        if (b) {
+                            // when checkbox selected
+                            // Check if the limit is reached
+                            if (personalityList.size() < 3) {
+                                // Add position in list
+                                personalityList.add(i);
+                                // Sort array list
+                                Collections.sort(personalityList);
+                            } else {
+                                // Show a message to the user
+                                Toast.makeText(RegisterActivity.this, "You can select up to 3 personalities only", Toast.LENGTH_SHORT).show();
+                                // Uncheck the checkbox
+                                ((AlertDialog) dialogInterface).getListView().setItemChecked(i, false);
+                            }
+                        } else {
+                            // when checkbox unselected
+                            // Remove position from list
+                            personalityList.remove(Integer.valueOf(i));
+                        }
+                    }
+                });
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Initialize string builder
+                        StringBuilder stringBuilder = new StringBuilder();
+                        // use for loop
+                        for (int j = 0; j < personalityList.size(); j++) {
+                            // concat array value
+                            stringBuilder.append(personalityArray[personalityList.get(j)]);
+                            // check condition
+                            if (j != personalityList.size() - 1) {
+                                // When j value  not equal
+                                // to list size - 1
+                                // add comma
+                                stringBuilder.append(", ");
+                            }
+                        }
+                        // set text on textView
+                        personalitiesinput.setText(stringBuilder.toString());
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // dismiss dialog
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // use for loop
+                        for (int j = 0; j < selectedpersonalites.length; j++) {
+                            // remove all selection
+                            selectedpersonalites[j] = false;
+                        }
+                        // clear list
+                        personalityList.clear();
+                        // clear text view value
+                        personalitiesinput.setText("");
+                    }
+                });
+                // show dialog
+                builder.show();
+            }
+        });
+
 
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override

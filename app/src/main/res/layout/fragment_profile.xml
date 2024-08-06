@@ -30,7 +30,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
             app:srcCompat="@drawable/baseline_logout_24"
-            android:contentDescription="Log Out"
+            android:contentDescription="@string/log_out"
             android:backgroundTint="@android:color/transparent"
             android:scaleType="fitXY"/>
 
@@ -111,12 +111,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Post" />
+                android:text="@string/post" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notes" />
+                android:text="@string/notes" />
 
         </com.google.android.material.tabs.TabLayout>
 

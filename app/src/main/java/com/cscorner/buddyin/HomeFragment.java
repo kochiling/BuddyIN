@@ -12,13 +12,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.widget.Button;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +34,15 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView recyclerViewH;
-    List<SubjectClass> subList;
+    RecyclerView recyclerViewH,recyclerViewV;
+    List<String> subList;
+    List<PostModel> postModelList;
     SubjectAdapter adapter;
+    PostAdapter adapter1;
     FloatingActionButton addButton;
     Button viewallbtn;
-
-
+    DatabaseReference databaseReference;
+    ValueEventListener eventListener;
 
     @Nullable
     @Override
@@ -50,7 +60,61 @@ public class HomeFragment extends Fragment {
         adapter = new SubjectAdapter(getContext(), subList);
         // setting adapter to our recycler view.
         recyclerViewH.setAdapter(adapter);
-        loadTestData();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Subject Data");
+        eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                subList.clear();
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    String subject = itemSnapshot.getValue(String.class);
+                    subList.add(subject);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Failed to load subjects.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recyclerViewV = view.findViewById(R.id.VerticalPostRV);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        recyclerViewV.setLayoutManager(gridLayoutManager);
+
+        postModelList = new ArrayList<>();
+
+        adapter1 = new PostAdapter(getContext(), postModelList);
+        recyclerViewV.setAdapter(adapter1);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Post");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<PostModel> postModelList = new ArrayList<>();
+                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot postSnapshot : userSnapshot.getChildren()) {
+                        PostModel postModel = postSnapshot.getValue(PostModel.class);
+                        if (postModel != null) {
+                            postModelList.add(postModel);
+                            Log.d("FirebaseData", "Fetched post: " + postModel.getUsername());
+                        } else {
+                            Log.d("FirebaseData", "PostModel is null");
+                        }
+                    }
+                }
+                adapter1.setPostModelList(postModelList);
+                adapter1.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Failed to load posts.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Add button
         addButton = view.findViewById(R.id.addButton);
@@ -91,20 +155,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private void loadTestData() {
-
-        // Add some test data to the taskList
-        subList.add(new SubjectClass("Math"));
-        subList.add(new SubjectClass("Science"));
-        subList.add(new SubjectClass("History"));
-        subList.add(new SubjectClass("Chemistry"));
-        subList.add(new SubjectClass("Physic"));
-
-        // Notify the adapter about the data changes
-        adapter.notifyDataSetChanged();
-    }
-    // Other methods of the HomeFragment
 }
 
 
