@@ -45,7 +45,7 @@
             android:textSize="15sp" />
 
         <ImageButton
-            android:id="@+id/commentButton"
+            android:id="@+id/likeButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@+id/contextCard"
@@ -57,23 +57,48 @@
             android:contentDescription="TODO"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:src="@drawable/round_comment_24"
+            android:src="@drawable/rounded_favorite_24"
             tools:ignore="ContentDescription,HardcodedText,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
 
+        <TextView
+            android:id="@+id/liked_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contextCard"
+            android:layout_marginStart="83dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="0"
+            android:textSize="20sp" />
+
+
         <ImageButton
-            android:id="@+id/likeButton"
+            android:id="@+id/commentButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_below="@+id/contextCard"
-            android:layout_marginStart="90dp"
+            android:layout_marginStart="110dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
             android:background="@color/white"
             android:contentDescription="TODO"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            android:src="@drawable/rounded_favorite_24"
+            android:src="@drawable/round_comment_24"
             tools:ignore="ContentDescription,HardcodedText,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/comment_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contextCard"
+            android:layout_marginStart="163dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="0"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
