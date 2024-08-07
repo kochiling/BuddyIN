@@ -64,9 +64,6 @@ public class UploadPostActivity extends AppCompatActivity {
     String imageURL;
     Uri uri;
 
-
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,13 +103,13 @@ public class UploadPostActivity extends AppCompatActivity {
                     if (userProfile != null) {
                         // Debugging log
                         Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-                            // Update the TextView with the retrieved data
-                            profilename.setText(userProfile.getUsername());
-                        }
-                    } else {
-                        Log.d(TAG, "User profile is null");
+                        // Update the TextView with the retrieved data
+                        profilename.setText(userProfile.getUsername());
                     }
+                } else {
+                    Log.d(TAG, "User profile is null");
                 }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

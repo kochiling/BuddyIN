@@ -41,5 +41,6 @@
     <string name="post">Post</string>
     <string name="notes">Notes</string>
     <string name="log_out">Log Out</string>
+    <string name="enter_title">Enter Title</string>
 
 </resources>
