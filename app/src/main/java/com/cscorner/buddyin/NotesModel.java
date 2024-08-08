@@ -5,6 +5,14 @@ public class NotesModel {
     private String pdfURL;
     private String subject;
     private String file_title;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public NotesModel() {
     }

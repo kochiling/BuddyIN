@@ -168,12 +168,15 @@ public class UploadNotesActivity extends AppCompatActivity {
     private void saveData() {
         if (validateSubject() & validateDesc()) {
             if (uri != null) {
-                StorageReference ref = storageReference.child(uri.getLastPathSegment());
+                final String timestamp = "" + System.currentTimeMillis();
+                final String messagePushID = timestamp;
+                StorageReference filepath = storageReference.child(messagePushID + "." + "pdf");
+                //StorageReference ref = storageReference.child(uri.getLastPathSegment()+ "." + "pdf");
                 ProgressDialog progressDialog = new ProgressDialog(this);
                 progressDialog.setTitle("File is Loading");
                 progressDialog.show();
 
-                ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();

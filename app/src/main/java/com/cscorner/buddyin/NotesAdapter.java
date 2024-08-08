@@ -2,6 +2,7 @@ package com.cscorner.buddyin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import java.util.List;
 
@@ -39,16 +40,24 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesViewHolder>{
         holder.pdf_name.setText(notesModelList.get(position).getFile_title());
         holder.pdf_description.setText(notesModelList.get(position).getDescription());
 
-//        holder.nbs_card.setOnClickListener(view -> {
-//            Intent intent = new Intent(view.getContext(), AddTipsDetailActivity.class);
-//            intent.putExtra("Image", notesModelList.get(holder.getAdapterPosition()).getDataImage());
-//            intent.putExtra("Title", notesModelList.get(holder.getAdapterPosition()).getDataTitle());
-//            intent.putExtra("URL Link", notesModelList.get(holder.getAdapterPosition()).getDataLink());
-//            intent.putExtra("Description", dataList.get(holder.getAdapterPosition()).getDataDesc());
-//            intent.putExtra("Key",dataList.get(holder.getAdapterPosition()).getKey());
-//            view.getContext().startActivity(intent);
-//        });
-
+        // Set the click listener for the card
+        holder.nbs_card.setOnClickListener(view -> {
+            new AlertDialog.Builder(context)
+                    .setTitle("Download PDF")
+                    .setMessage("Do you want to download this PDF?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Proceed with download
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setType("application/pdf");
+                            intent.setData(Uri.parse(notesModelList.get(holder.getAdapterPosition()).getPdfURL()));
+                            view.getContext().startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", null) // No action needed, just dismiss the dialog
+                    .show();
+        });
     }
 
     @Override
