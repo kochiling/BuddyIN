@@ -4,7 +4,7 @@ public class KNNDataInfoModel {
     private String userid;
     private String name;
     private String course;
-    private String seniority;
+    private Integer seniority;
     private String hobbies;
     private String personalities;
     private String key;
@@ -42,11 +42,11 @@ public class KNNDataInfoModel {
         return name;
     }
 
-    public String getSeniority() {
+    public Integer getSeniority() {
         return seniority;
     }
 
-    public KNNDataInfoModel(String userid, String name, String course, String seniority, String hobbies, String personalities) {
+    public KNNDataInfoModel(String userid, String name, String course, Integer seniority, String hobbies, String personalities) {
         this.userid = userid;
         this.name = name;
         this.course = course;

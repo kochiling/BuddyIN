@@ -379,7 +379,7 @@ public class RegisterActivity extends AppCompatActivity {
         String username = usernameinput.getText().toString().trim();
         String age = ageinput.getText().toString().trim();
         String gender =genderinput.getText().toString().trim();
-        String senior = seniorinput.getText().toString().trim();
+        Integer senior = Integer.valueOf(seniorinput.getText().toString().trim());
         String courses = courseinput.getText().toString().trim();
         String hobbies = hobbiesinput.getText().toString().trim();
         String personality = personalitiesinput.getText().toString().trim();
