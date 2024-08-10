@@ -202,7 +202,7 @@ public class UploadPostActivity extends AppCompatActivity {
         FirebaseAuth dbAuth = FirebaseAuth.getInstance();
         String user_id = Objects.requireNonNull(dbAuth.getCurrentUser()).getUid();
         String subject = subjectCode_spinner.getText().toString().trim();
-        String description = input_desc.getText().toString().trim();
+        String description = Objects.requireNonNull(input_desc.getText()).toString().trim();
         String username = profilename.getText().toString().trim();
 
         PostModel postModel = new PostModel(user_id,username,subject,description,imageURL);

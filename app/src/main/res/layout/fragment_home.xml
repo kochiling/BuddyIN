@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="viewall"
+                android:text="@string/view_all"
                 android:background="@color/transparent"
                 android:textColor="@color/blue"
                 android:textAlignment="center"

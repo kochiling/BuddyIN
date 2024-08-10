@@ -17,11 +17,11 @@
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="TODO"
-            android:src="@drawable/vertical_transparent_logo"
+            android:src="@drawable/vertical_transparent_logo2"
             tools:ignore="ContentDescription,HardcodedText" />
 
         <TextView
@@ -37,10 +37,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="310dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:boxBackgroundColor="@color/pink_box"
             android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             app:boxStrokeColor="@color/purple"
             app:errorEnabled="true"
             app:startIconDrawable="@drawable/baseline_email_24"
@@ -49,7 +50,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailinput"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="0dp"
                 android:hint="email@gmail.com"
@@ -70,9 +71,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="310dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             app:boxBackgroundColor="@color/pink_box"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/purple"
@@ -83,7 +85,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordinput"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="password"
                 android:textColor="@color/black"
@@ -94,10 +96,11 @@
 
         <Button
             android:id="@+id/forgetPasswordbtn"
-            android:layout_width="300dp"
-            android:layout_height="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/transparent"
             android:text="@string/forget_password"
             android:textAlignment="viewStart"
@@ -106,9 +109,10 @@
 
         <Button
             android:id="@+id/loginbtn"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/red_btn"
             android:shadowColor="@color/black"
@@ -119,9 +123,10 @@
 
         <Button
             android:id="@+id/createAccbtn"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="5dp"
             android:background="@color/transparent"
             android:text="@string/create_a_new_account"

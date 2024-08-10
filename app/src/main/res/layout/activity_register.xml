@@ -63,10 +63,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/nameinputlayout"
@@ -74,7 +75,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
                     android:hint="@string/name"
@@ -84,10 +85,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/usernameinputlayout"
@@ -95,7 +97,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
                     android:hint="@string/username"
@@ -103,35 +105,37 @@
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple"
                 android:id="@+id/ageinputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:boxStrokeColor="@color/purple"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ageinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
-                    android:inputType="number"
                     android:hint="@string/age"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/genderinputlayout"
@@ -139,7 +143,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/genderinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
                     android:hint="@string/gender"
@@ -149,10 +153,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/courseinputlayout"
@@ -160,7 +165,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/courseinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
                     android:hint="@string/course_studied"
@@ -169,21 +174,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple"
                 android:id="@+id/seniorinputlayout"
-                app:errorEnabled="true">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:boxStrokeColor="@color/purple"
+                app:errorEnabled="true"
+                app:prefixText=" Year "
+                app:prefixTextColor="@color/black"
+                app:expandedHintEnabled="false"
+                app:counterEnabled="true"
+                app:counterMaxLength="1">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/seniorinput"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
                     android:layout_marginStart="0dp"
+                    android:inputType="number"
                     android:hint="@string/seniority_example_year_1"
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck" />
@@ -191,10 +203,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/hobbiesinputlayout"
@@ -202,7 +215,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/hobbiesinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:hint="@string/hobbies"
@@ -218,10 +231,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/personalitiesinputlayout"
@@ -229,7 +243,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/personalitiesinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:hint="@string/personalities"
@@ -244,10 +258,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="310dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/nationalinputlayout"
@@ -255,7 +270,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/nationalityinput"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
                     android:hint="@string/nationality"
@@ -269,6 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 android:text="@string/i_agree_to_the_terms_and_conditions"
                 tools:ignore="TextContrastCheck"
@@ -277,9 +293,10 @@
 
             <Button
                 android:id="@+id/registerbtn"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="55dp"
                 android:backgroundTint="@color/red_btn"
                 android:shadowColor="@color/black"

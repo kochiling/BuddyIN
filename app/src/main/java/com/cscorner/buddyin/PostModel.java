@@ -52,7 +52,7 @@ public class PostModel {
         this.username = username;
     }
 
-    public PostModel(String description, String username, String user_id, String subject, String post_image) {
+    public PostModel(String user_id, String username, String subject, String description, String post_image) {
         this.description = description;
         this.username = username;
         this.user_id = user_id;
