@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment {
     Button viewallbtn;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
+
 
     @Nullable
     @Override
@@ -115,6 +118,8 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to load posts.", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         //Add button
         addButton = view.findViewById(R.id.addButton);

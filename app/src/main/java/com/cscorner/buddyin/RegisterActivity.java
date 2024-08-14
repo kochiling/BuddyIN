@@ -44,14 +44,14 @@ import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextInputEditText nameinput,usernameinput,ageinput,seniorinput,hobbiesinput,personalitiesinput;
+    TextInputEditText nameinput,ageinput,seniorinput,hobbiesinput,personalitiesinput;
     AutoCompleteTextView genderinput,courseinput,nationalityinput;
     CheckBox checkBox;
     Button registerbtn;
     ImageView upload_pics;
     String imageURL;
     Uri uri;
-    TextInputLayout nameinputlayout,usernameinputlayout,ageinputlayout,seniorinputlayout,hobbiesinputlayout,
+    TextInputLayout nameinputlayout,ageinputlayout,seniorinputlayout,hobbiesinputlayout,
             personalitiesinputlayout,genderinputlayout,courseinputlayout,nationalinputlayout;
 
     boolean[] selectedhobbies;
@@ -75,7 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         nameinput = findViewById(R.id.nameinput);
-        usernameinput = findViewById(R.id.usernameinput);
         ageinput = findViewById(R.id.ageinput);
         seniorinput = findViewById(R.id.seniorinput);
         genderinput = findViewById(R.id.genderinput);
@@ -87,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
         upload_pics = findViewById(R.id.upload_pics);
         checkBox = findViewById(R.id.terms_checkbox);
         nameinputlayout = findViewById(R.id.nameinputlayout);
-        usernameinputlayout = findViewById(R.id.usernameinputlayout);
         ageinputlayout = findViewById(R.id.ageinputlayout);
         seniorinputlayout = findViewById(R.id.seniorinputlayout);
         hobbiesinputlayout = findViewById(R.id.hobbiesinputlayout);
@@ -334,7 +332,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void saveData() {
-        if (validateName() & validateUsername() & validateAge() & validateGender() & validateSenior() & validateCourse() & validateNationality() & validateHobbies() & validatePersonality() ) {
+        if (validateName() & validateAge() & validateGender() & validateSenior() & validateCourse() & validateNationality() & validateHobbies() & validatePersonality() ) {
             if (uri != null) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("User Profile Pics")
                         .child(Objects.requireNonNull(uri.getLastPathSegment()));
@@ -376,7 +374,6 @@ public class RegisterActivity extends AppCompatActivity {
         String user_id = Objects.requireNonNull(dbAuth.getCurrentUser()).getUid();
 
         String name = nameinput.getText().toString().trim();
-        String username = usernameinput.getText().toString().trim();
         String age = ageinput.getText().toString().trim();
         String gender =genderinput.getText().toString().trim();
         Integer senior = Integer.valueOf(seniorinput.getText().toString().trim());
@@ -387,7 +384,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         //refer back to above string name
         KNNDataInfoModel knnDataInfoModel = new KNNDataInfoModel(user_id,name,courses,senior,hobbies,personality);
-        UserModel userModel = new UserModel(username,age,gender,nationality,imageURL);
+        UserModel userModel = new UserModel(name,age,gender,nationality,imageURL,user_id);
 
         FirebaseDatabase.getInstance().getReference("KNN Data Information").child(user_id)
                 .setValue(knnDataInfoModel).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -431,17 +428,6 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         } else {
             nameinputlayout.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validateUsername() {
-        String username = usernameinput.getText().toString().trim();
-        if (username.isEmpty()) {
-            usernameinputlayout.setError("Username is required!");
-            return false;
-        } else {
-            usernameinput.setError(null);
             return true;
         }
     }

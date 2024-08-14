@@ -32,7 +32,7 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/buddy_chat" />
+                android:text="Buddy Recommendation" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -41,13 +41,14 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/buddy_vpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_below="@id/buddytab"
+            android:contentDescription="@string/buddy_list"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buddytab" />
 
 

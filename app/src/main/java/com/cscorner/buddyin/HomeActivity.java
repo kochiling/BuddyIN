@@ -64,10 +64,14 @@ public class HomeActivity extends AppCompatActivity {
                     break;
 
                 case 2:
-                    replaceFragment(new ChatbotFragment());
+                    replaceFragment(new BuddyChatFragment());
                     break;
 
                 case 3:
+                    replaceFragment(new ChatbotFragment());
+                    break;
+
+                case 4:
                     replaceFragment(new ProfileFragment());
                     break;
             }

@@ -1,20 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuddyListFragment">
-
-    <TextView
-        android:id="@+id/no_data_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text ="@string/buddy_list"
-        android:gravity="center"
-        android:textSize="30sp"/>
+    tools:context=".BuddyRecommendFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/buddy_c_rv"
+        android:id="@+id/buddy_crv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -22,5 +13,14 @@
         tools:listitem="@layout/recommendation_buddy_item">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/no_data_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text ="No Buddy"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="30sp"/>
 
 </FrameLayout>
