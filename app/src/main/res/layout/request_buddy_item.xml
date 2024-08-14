@@ -52,7 +52,7 @@
             android:layout_marginStart="20dp"
             android:elevation="20dp"
             android:shadowColor="@color/black"
-            android:text="Send Request"
+            android:text="Accept"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"

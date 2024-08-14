@@ -60,11 +60,11 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        BuddyPageAdapter vpAdapter = new BuddyPageAdapter(getChildFragmentManager());
-
-        vpAdapter.addfragment(new PostProfileFragment(), "Post");
-        vpAdapter.addfragment(new NotesProfileFragment(), "Notes");
-        viewPager.setAdapter(vpAdapter);
+//        BuddyPageAdapter vpAdapter = new BuddyPageAdapter(getChildFragmentManager());
+//
+//        vpAdapter.addfragment(new PostProfileFragment(), "Post");
+//        vpAdapter.addfragment(new NotesProfileFragment(), "Notes");
+//        viewPager.setAdapter(vpAdapter);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

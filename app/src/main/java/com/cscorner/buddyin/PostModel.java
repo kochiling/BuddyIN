@@ -6,6 +6,7 @@ public class PostModel {
     private String subject;
     private String user_id;
     private String username;
+    private String key;
 
     // Default constructor required for calls to DataSnapshot.getValue(PostModel.class)
     public PostModel() {
