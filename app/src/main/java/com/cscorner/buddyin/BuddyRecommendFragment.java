@@ -65,7 +65,7 @@ public class BuddyRecommendFragment extends Fragment {
 
     private void fetchMatchedBuddies() {
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference matchedBuddiesRef = FirebaseDatabase.getInstance().getReference("MatchResults").child(currentUserId);
+        DatabaseReference matchedBuddiesRef = FirebaseDatabase.getInstance().getReference("Buddies").child("MatchResults").child(currentUserId);
 
         matchedBuddiesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

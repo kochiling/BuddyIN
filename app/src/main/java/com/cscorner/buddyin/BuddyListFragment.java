@@ -92,11 +92,13 @@ public class BuddyListFragment extends Fragment {
                 if (userModel != null) {
                     userModel.setKey(snapshot.getKey()); // Assuming you have a setKey method to store the key
                     UserList.add(userModel);
-                    adapter.notifyDataSetChanged();
-                    noDataText.setVisibility(UserList.isEmpty() ? View.VISIBLE : View.GONE);
+
                 } else {
                     Log.d(TAG, "UserModel is null for buddyId: " + buddyId);
                 }
+
+                adapter.notifyDataSetChanged();
+                noDataText.setVisibility(UserList.isEmpty() ? View.VISIBLE : View.GONE);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
