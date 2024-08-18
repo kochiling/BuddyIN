@@ -154,7 +154,7 @@ public class BuddyProfileActivity extends AppCompatActivity {
                 targetUserSentRef.setValue(true);
 
                 // Reference to the MatchResults node for the current user
-                DatabaseReference matchResultsRef = FirebaseDatabase.getInstance().getReference("MatchResults").child( userId );
+                DatabaseReference matchResultsRef = FirebaseDatabase.getInstance().getReference("Buddies").child("MatchResults").child( userId );
 
                 matchResultsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -176,7 +176,7 @@ public class BuddyProfileActivity extends AppCompatActivity {
 
                         // Optionally update the target user's match results as well
                         if (hasUpdates) {
-                            DatabaseReference targetUserMatchResultsRef = FirebaseDatabase.getInstance().getReference("MatchResults").child(requestUserId);
+                            DatabaseReference targetUserMatchResultsRef = FirebaseDatabase.getInstance().getReference("Buddies").child("MatchResults").child(requestUserId);
                             targetUserMatchResultsRef.child(userId).setValue(false);
                         }
                     }

@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,14 +72,27 @@ public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHo
                         .child("list")
                         .child(currentUserId);
 
+//                DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("Buddies").child("status")
+//                        .child(requestUserId);
+//
+//                DatabaseReference statusMyRef = FirebaseDatabase.getInstance().getReference("Buddies").child("status")
+//                        .child(currentUserId);
+
+
                 // Update friend request status and add to friend list
                 userReceivedRef.setValue(false).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         userSentRef.setValue(false).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
                                 // Successfully updated friend requests, now add to friend lists
-                                currentUserFriendListRef.setValue(true);
-                                requestUserFriendListRef.setValue(true);
+                                currentUserFriendListRef.setValue(true); // Store userId with true
+                                requestUserFriendListRef.setValue(true);// Store userId with true
+
+//                                HashMap<Object, String> hashMap = new HashMap<>();
+//                                hashMap.put("onlineStatus", "online");
+//                                hashMap.put("typingTo", "no one");
+//                                statusRef.setValue(hashMap);
+//                                statusMyRef.setValue(hashMap);
 
                                 // Show success message
                                 Toast.makeText(v.getContext(), "Buddy request accepted", Toast.LENGTH_SHORT).show();

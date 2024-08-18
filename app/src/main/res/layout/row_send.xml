@@ -13,17 +13,18 @@
         android:layout_height="wrap_content"
         android:paddingStart="40dp"
         android:paddingTop="20dp"
-        android:paddingEnd="20dp">
+        android:paddingEnd="20dp"
+        android:layout_gravity="end">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/outgoing_chat"
+            android:gravity="end"
             android:orientation="vertical"
             android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -31,43 +32,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus iaculis consectetur. Pellentesque ut felis vel dolor suscipit laoreet. Aliquam eu facilisis augue. Nam purus elit, pretium non faucibus ac, lobortis faucibus enim. In mattis augue enim, in mollis velit condimentum ac. Duis vitae ex eget eros facilisis ullamcorper ac et elit. Nullam gravida non tortor eu feugiat. Nunc hendrerit in eros non auctor. Aliquam eu laoreet augue, vel porttitor nunc." />
 
             <ImageView
                 android:id="@+id/images"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/outgoing_chat"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_image_24" />
+                android:src="@drawable/baseline_image_24"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/user_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10:10 AM"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
+                android:text="10:10 AM"
                 android:textAlignment="viewEnd"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/isSeen"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="3dp"
+                android:layout_marginEnd="10dp"
                 android:text="Delivered"
-                android:textColor="@color/black"
                 android:textAlignment="textEnd"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="parent" />
 
