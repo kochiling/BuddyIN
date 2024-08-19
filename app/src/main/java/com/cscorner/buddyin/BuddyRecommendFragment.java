@@ -26,9 +26,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+//import okhttp3.Call;
+//import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+//import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import okhttp3.ResponseBody;
+import com.google.gson.JsonObject;
 
 public class BuddyRecommendFragment extends Fragment {
 
@@ -37,6 +56,7 @@ public class BuddyRecommendFragment extends Fragment {
      DatabaseReference matchResultsRef, usersRef, knnDataInfoRef;
      List<UserModel> UserList;
      TextView noDataText;
+     private BuddyMatchApi api;
 
     @Nullable
     @Override
@@ -61,6 +81,78 @@ public class BuddyRecommendFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         fetchMatchedBuddies();
 
+        // Initialize Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.115:5000") // Your Flask server URL
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        api = retrofit.create(BuddyMatchApi.class);
+
+        // Call the method to make the request
+        sendUserIdToServer();
+
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//
+//        String currentuid= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+//
+//        RequestBody formbody = new FormBody.Builder().add("user_id",currentuid).build();
+//
+//        Request request = new Request.Builder().url("http://192.168.0.115:5000/get_buddies").post(formbody).build();
+//        // Inside your OkHttp callback
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                Log.e("API Error", "Request failed: " + e.getMessage());
+//                getActivity().runOnUiThread(() -> {
+//                    Toast.makeText(getActivity(), "Error from API", Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                assert response.body() != null;
+//                String responseBody = response.body().string();
+//                getActivity().runOnUiThread(() -> {
+//                    Log.e("API Error", responseBody);
+//                    Toast.makeText(getActivity(), responseBody, Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//        });
+
+    }
+
+    private void sendUserIdToServer() {
+        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Create a JSON object with the user ID
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("user_id", currentUid);
+
+        // Make the API call using Retrofit
+        Call<ResponseBody> call = api.getBuddies(jsonObject);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String responseBody = Objects.requireNonNull(response.body()).string();
+                        // Handle the response
+                        Toast.makeText(getActivity(), responseBody, Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Failed to read response", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "Request failed: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), "Request failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void fetchMatchedBuddies() {
@@ -101,19 +193,7 @@ public class BuddyRecommendFragment extends Fragment {
                     Log.d(TAG, "UserModel is null for buddyId: " + buddyId);
                 }
 
-
             }
-
-
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                UserModel userModel = snapshot.getValue(UserModel.class);
-//                if (userModel != null) {
-//                    UserList.add(userModel);
-//                    adapter.notifyDataSetChanged();
-//                    noDataText.setVisibility(UserList.isEmpty() ? View.VISIBLE : View.GONE);
-//                }
-//            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
