@@ -1,6 +1,7 @@
 package com.cscorner.buddyin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,18 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 receiveViewHolder.receive_text.setVisibility(View.GONE);
                 receiveViewHolder.receive_images.setVisibility(View.VISIBLE);
                 Glide.with(context).load(message).into(receiveViewHolder.receive_images);
+
+                ((ReceiveViewHolder) holder).receive_images.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ViewChatImageActivity.class);
+                        intent.putExtra("imageUrl",item.getMessage() );
+                        context.startActivity(intent);
+                    }
+                });
             }
+
+
 
         } else {
             SendViewHolder sendViewHolder = (SendViewHolder) holder;
@@ -89,6 +101,15 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 sendViewHolder.user_text.setVisibility(View.GONE);
                 sendViewHolder.images.setVisibility(View.VISIBLE);
                 Glide.with(context).load(message).into(sendViewHolder.images);
+
+                ((SendViewHolder) holder).images.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ViewChatImageActivity.class);
+                        intent.putExtra("imageUrl",item.getMessage() );
+                        context.startActivity(intent);
+                    }
+                });
             }
         }
     }

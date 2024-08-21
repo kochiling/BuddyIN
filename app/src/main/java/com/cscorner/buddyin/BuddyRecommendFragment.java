@@ -150,6 +150,7 @@ public class BuddyRecommendFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                //Toast.makeText(getActivity(), "API is not online", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(), "Request failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
