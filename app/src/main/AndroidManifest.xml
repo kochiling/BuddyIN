@@ -30,6 +30,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".LecturerHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminHomePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LecturerSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatbotActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewChatImageActivity"
             android:exported="false" />
         <activity

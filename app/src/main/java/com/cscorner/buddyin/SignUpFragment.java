@@ -57,8 +57,6 @@ public class SignUpFragment extends Fragment {
         passwordinputlayout = view.findViewById(R.id.passwordinputlayout);
         confirminputlayout = view.findViewById(R.id.confirminputlayout);
 
-
-
         return view;
     }
 

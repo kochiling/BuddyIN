@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RegisterActivity">
+    tools:context=".LecturerSignUpActivity"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/register_toolbar"
@@ -43,8 +44,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="@string/personal_information"
-                android:textSize="25sp"
+                android:text="Lecturer Personal Information"
+                android:textSize="22sp"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
@@ -84,29 +85,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ageinputlayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxBackgroundColor="@color/pink_box"
-                app:boxStrokeColor="@color/purple"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ageinput"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="0dp"
-                    android:hint="@string/age"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    tools:ignore="TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -115,45 +93,23 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="25dp"
                 app:boxStrokeColor="@color/purple"
-                android:id="@+id/genderinputlayout"
+                android:id="@+id/facultyinputlayout"
                 app:errorEnabled="true">
 
                 <AutoCompleteTextView
-                    android:id="@+id/genderinput"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="0dp"
-                    android:hint="@string/gender"
-                    android:textColor="@color/black"
-                    tools:ignore="TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple"
-                android:id="@+id/courseinputlayout"
-                app:errorEnabled="true">
-
-                <AutoCompleteTextView
-                    android:id="@+id/courseinput"
+                    android:id="@+id/facultyinput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="false"
                     android:maxLines="3"
                     android:layout_marginStart="0dp"
-                    android:hint="@string/course_studied"
+                    android:hint="Faculty"
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/seniorinputlayout"
+                android:id="@+id/idinputlayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,101 +118,92 @@
                 android:layout_marginBottom="25dp"
                 app:boxBackgroundColor="@color/pink_box"
                 app:boxStrokeColor="@color/purple"
-                app:errorEnabled="true"
-                app:prefixText=" Year "
-                app:prefixTextColor="@color/black"
-                app:expandedHintEnabled="false"
-                app:counterEnabled="true"
-                app:counterMaxLength="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/seniorinput"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="0dp"
-                    android:inputType="number"
-                    android:hint="@string/seniority_example_year_1"
-                    android:textColor="@color/black"
-                    tools:ignore="TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple"
-                android:id="@+id/hobbiesinputlayout"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/hobbiesinput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:hint="@string/hobbies"
-                    android:textColor="@color/black"
-                    android:lines="3"
-                    android:minLines="1"
-                    android:inputType="textMultiLine|none"
-                    tools:ignore="TextContrastCheck"
-                    android:focusable="false"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple"
-                android:id="@+id/personalitiesinputlayout"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/personalitiesinput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:hint="@string/personalities"
-                    android:textColor="@color/black"
-                    tools:ignore="TextContrastCheck"
-                    android:lines="3"
-                    android:minLines="1"
-                    android:inputType="textMultiLine|none"
-                    android:focusable="false"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/pink_box"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
-                app:boxStrokeColor="@color/purple"
-                android:id="@+id/nationalinputlayout"
-                app:errorEnabled="true">
-
-                <AutoCompleteTextView
-                    android:id="@+id/nationalityinput"
+                    android:id="@+id/idinput"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="0dp"
-                    android:hint="Country of residence"
+                    android:hint="Lecturer ID"
                     android:textColor="@color/black"
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/baseline_email_24"
+                app:startIconTint="@color/purple"
+                android:id="@+id/emailinputlayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:hint="email@gmail.com"
+                    android:textColor="@color/black"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/purple"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/baseline_lock_24"
+                app:startIconTint="@color/purple"
+                android:id="@+id/passwordinputlayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="password"
+                    android:textColor="@color/black"
+                    android:textColorHint="#AB47BC"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirminputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:endIconMode="password_toggle"
+                app:endIconDrawable="@drawable/baseline_visibility_24"
+                app:endIconTint="@color/purple"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirminput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="confirm password"
+                    android:inputType="textPassword"
+                    android:textColorHint="#AB47BC"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/terms_checkbox"
@@ -283,6 +230,12 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:elevation="20dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
