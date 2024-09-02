@@ -2,6 +2,7 @@ package com.cscorner.buddyin;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,11 +33,12 @@ import java.util.Objects;
 
 public class BuddyChatFragment extends Fragment {
 
-    RecyclerView recyclerView;
+
     BuddyChatAdapter adapter;
     DatabaseReference usersRef;
     List<UserModel> UserList;
     TextView noDataText;
+    ImageButton chatbot;
 
     @Nullable
     @Override
@@ -49,6 +53,16 @@ public class BuddyChatFragment extends Fragment {
 
         noDataText = view.findViewById(R.id.no_data_text);
         noDataText.setVisibility(View.VISIBLE );
+        chatbot = view.findViewById(R.id.chatbot);
+
+        chatbot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChatbotActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
+            }
+        });
 
         RecyclerView recyclerView = view.findViewById(R.id.buddy_chat_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));

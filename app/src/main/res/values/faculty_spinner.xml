@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="facultyinput">
+        <item>School of Engineering</item>
+        <item>School of Computing</item>
+        <item>School of Business</item>
+        <item>School of Excellent Pre School</item>
+        <item>School of Hospitality</item>
+    </string-array>
+</resources>

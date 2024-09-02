@@ -65,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
     ArrayList<Integer> personalityList = new ArrayList<>();
     String[] personalityArray;
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -332,6 +333,32 @@ public class RegisterActivity extends AppCompatActivity {
             photoPicker.setType("image/*");
             activityResultLauncher.launch(photoPicker);
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        boolean isFormCompleted = false;
+        if (!isFormCompleted) {
+            showExitConfirmationDialog();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // Show dialog when user tries to exit with incomplete form
+    private void showExitConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("You have not completed the registration. Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        RegisterActivity.super.onBackPressed();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     public void saveData() {
