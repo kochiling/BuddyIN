@@ -41,22 +41,12 @@ public class LoginFragment extends Fragment {
     TextInputLayout emailinputlayout,passwordinputlayout;
     FirebaseAuth mAuth;
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser != null) {
-//            Intent intent = new Intent(getActivity(), HomeActivity.class);
-//            startActivity(intent);
-//            requireActivity().finish();
-//        }
-//    }
-
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            progressBar.setVisibility(View.VISIBLE);
             // Check the user's role before redirecting
             checkUserRole(currentUser.getUid());
         }
@@ -92,6 +82,7 @@ public class LoginFragment extends Fragment {
         lecturerRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                progressBar.setVisibility(View.GONE);
                 if (dataSnapshot.exists()) {
                     Integer status = dataSnapshot.child("status").getValue(Integer.class);
                     handleLecturerLogin(status);
@@ -127,6 +118,7 @@ public class LoginFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         emailinputlayout = view.findViewById(R.id.emailinputlayout);
         passwordinputlayout = view.findViewById(R.id.passwordinputlayout);
+
         return view;
     }
 
@@ -164,57 +156,23 @@ public class LoginFragment extends Fragment {
 
             private void signInRegularUser(String email, String password) {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         // Login successful, now check the user's role
                         FirebaseUser currentUser = mAuth.getCurrentUser();
                         if (currentUser != null) {
                             checkUserRole(currentUser.getUid());
+                        } else {
+                            // No current user; something went wrong
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getActivity(), "Login failed: No user found.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
+                        // Login failed, hide the progress bar and show a message
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-
-//            private void signInRegularUser(String email, String password) {
-//                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-//                    progressBar.setVisibility(View.GONE);
-//                    if (task.isSuccessful()) {
-//                        // Login successful, now check if user is a lecturer
-//                        FirebaseUser currentUser = mAuth.getCurrentUser();
-//                        if (currentUser != null) {
-//                            String userId = currentUser.getUid();
-//                            DatabaseReference lecturerRef = FirebaseDatabase.getInstance().getReference("Lecturers").child(userId);
-//
-//                            // Fetch lecturer details from Firebase
-//                            lecturerRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    if (dataSnapshot.exists()) {
-//                                        // User is a lecturer, get the status
-//                                        Integer status = dataSnapshot.child("status").getValue(Integer.class);
-//                                        handleLecturerLogin(status);
-//                                    } else {
-//                                        // Not a lecturer, proceed to regular user home page
-//                                        Toast.makeText(getActivity(), "Login Successful.", Toast.LENGTH_SHORT).show();
-//                                        Intent intent = new Intent(getActivity(), HomeActivity.class);
-//                                        startActivity(intent);
-//                                        getActivity().finish();
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//                                    Toast.makeText(getActivity(), "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                        }
-//                    } else {
-//                        Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
 
         });
 
