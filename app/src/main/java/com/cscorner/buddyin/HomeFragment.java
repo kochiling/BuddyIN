@@ -1,5 +1,7 @@
 package com.cscorner.buddyin;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -94,21 +97,20 @@ public class HomeFragment extends Fragment {
         recyclerViewV.setAdapter(adapter1);
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Post");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("timestamp").limitToLast(100).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<PostModel> postModelList = new ArrayList<>();
-                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    for (DataSnapshot postSnapshot : userSnapshot.getChildren()) {
-                        PostModel postModel = postSnapshot.getValue(PostModel.class);
-                        if (postModel != null) {
-                            postModelList.add(postModel);
-                            Log.d("FirebaseData", "Fetched post: " + postModel.getUsername());
-                        } else {
-                            Log.d("FirebaseData", "PostModel is null");
-                        }
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    PostModel postModel = postSnapshot.getValue(PostModel.class);
+                    if (postModel != null) {
+                        postModelList.add(postModel);
                     }
                 }
+
+                // Reverse the list to show the latest posts first
+                Collections.reverse(postModelList);
+
                 adapter1.setPostModelList(postModelList);
                 adapter1.notifyDataSetChanged();
             }
@@ -118,7 +120,6 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to load posts.", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         //Add button

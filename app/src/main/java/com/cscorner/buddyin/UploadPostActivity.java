@@ -29,6 +29,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -63,7 +64,11 @@ public class UploadPostActivity extends AppCompatActivity {
     DatabaseReference dbref, databaseReference;
     String imageURL;
     Uri uri;
+    ImageView profileimage;
+    String imageProfile;
 
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +91,40 @@ public class UploadPostActivity extends AppCompatActivity {
         profilename = findViewById(R.id.profile_name);
         subjectlayout = findViewById(R.id.subjectlayout);
         desclayout = findViewById(R.id.input_desclayout);
+        profileimage = findViewById(R.id.profileImage);
         //Get Profile Name
         // Get the current user ID
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+//        // Reference to "User Info" under the current user
+//        databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
+//
+//        // Add a ValueEventListener to retrieve and update data
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("StringFormatInvalid")
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Use the UserModel class to map the data from the database
+//                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
+//                    if (userProfile != null) {
+//                        // Debugging log
+//                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
+//                        // Update the TextView with the retrieved data
+//                        profilename.setText(userProfile.getUsername());
+//                    }
+//                } else {
+//                    Log.d(TAG, "User profile is null");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Log.d(TAG, "User profile is null");
+//            }
+//        });
+
+
         // Reference to "User Info" under the current user
         databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
 
@@ -103,17 +139,29 @@ public class UploadPostActivity extends AppCompatActivity {
                     if (userProfile != null) {
                         // Debugging log
                         Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-                        // Update the TextView with the retrieved data
-                        profilename.setText(userProfile.getUsername());
+                        // Load the profile image using Glide
+                        if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+                            Glide.with(UploadPostActivity.this)
+                                    .load(userProfile.getProfile_image())
+                                    .into(profileimage);
+
+                            imageProfile = userProfile.getProfile_image();
+                            Log.d(TAG,imageProfile);
+
+                            // Update the TextView with the retrieved data
+                            profilename.setText(userProfile.getUsername());
+                        }
+                    } else {
+                        Log.d(TAG, "User profile is null");
                     }
                 } else {
-                    Log.d(TAG, "User profile is null");
+                    Log.d(TAG, "Data snapshot does not exist");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d(TAG, "User profile is null");
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "Error: " + databaseError.getMessage());
             }
         });
 
@@ -200,28 +248,37 @@ public class UploadPostActivity extends AppCompatActivity {
     public void saveInfo(){
         //get the user_id
         FirebaseAuth dbAuth = FirebaseAuth.getInstance();
+        String timestamp = String.valueOf(System.currentTimeMillis());
         String user_id = Objects.requireNonNull(dbAuth.getCurrentUser()).getUid();
         String subject = subjectCode_spinner.getText().toString().trim();
         String description = Objects.requireNonNull(input_desc.getText()).toString().trim();
         String username = profilename.getText().toString().trim();
 
-        PostModel postModel = new PostModel(user_id,username,subject,description,imageURL);
+        // Reference to the "Post" node under the current user's ID
+        DatabaseReference postRef = FirebaseDatabase.getInstance().getReference("Post");
+        // Generate a unique key for the new post
+        String post_id = postRef.push().getKey();
 
-        FirebaseDatabase.getInstance().getReference("Post").child(user_id).push()
-                .setValue(postModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(UploadPostActivity.this, "Posted Successfully", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UploadPostActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        PostModel postModel = new PostModel(description,imageURL,subject,user_id,username,post_id,timestamp);
+
+        // Set the post value in the database under the generated post ID
+        postRef.child(Objects.requireNonNull(post_id)).setValue(postModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    // Show a success message
+                    Toast.makeText(UploadPostActivity.this, "Posted Successfully", Toast.LENGTH_LONG).show();
+                    // Finish the activity and return to the previous screen
+                    finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Show an error message
+                Toast.makeText(UploadPostActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
