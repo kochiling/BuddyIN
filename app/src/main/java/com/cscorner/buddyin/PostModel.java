@@ -9,6 +9,7 @@ public class PostModel {
     private String post_id;
     private String timestamp;
     private String key;
+    private String user_profile;
 
     // Default constructor required for calls to DataSnapshot.getValue(PostModel.class)
     public PostModel() {
@@ -78,6 +79,25 @@ public class PostModel {
         this.description = description;
     }
 
+    public String getUser_profile() {
+        return user_profile;
+    }
+
+    public void setUser_profile(String user_profile) {
+        this.user_profile = user_profile;
+    }
+
+    public PostModel(String user_profile, String description, String post_image, String subject, String user_id, String username, String post_id, String timestamp) {
+        this.user_profile = user_profile;
+        this.timestamp = timestamp;
+        this.username = username;
+        this.user_id = user_id;
+        this.subject = subject;
+        this.post_image = post_image;
+        this.description = description;
+        this.post_id = post_id;
+    }
+
     public PostModel(String description, String post_image, String subject, String user_id, String username, String post_id, String timestamp) {
         this.description = description;
         this.post_image = post_image;
@@ -86,5 +106,6 @@ public class PostModel {
         this.username = username;
         this.post_id = post_id;
         this.timestamp = timestamp;
+
     }
 }
