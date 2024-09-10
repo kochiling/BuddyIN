@@ -259,7 +259,8 @@ public class UploadPostActivity extends AppCompatActivity {
         // Generate a unique key for the new post
         String post_id = postRef.push().getKey();
 
-        PostModel postModel = new PostModel(description,imageURL,subject,user_id,username,post_id,timestamp);
+        //PostModel postModel = new PostModel(description,imageURL,subject,user_id,username,post_id,timestamp);
+        PostModel postModel = new PostModel(imageProfile,description,imageURL,subject,user_id,username,post_id,timestamp);
 
         // Set the post value in the database under the generated post ID
         postRef.child(Objects.requireNonNull(post_id)).setValue(postModel).addOnCompleteListener(new OnCompleteListener<Void>() {

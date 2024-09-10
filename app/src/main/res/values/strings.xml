@@ -44,5 +44,7 @@
     <string name="enter_title">Enter Title</string>
     <string name="view_all">View All</string>
     <string name="no_buddies_yet">No Buddies Yet 😭</string>
+    <string name="_10_10_am">10:10 AM</string>
+    <string name="chat">Chat</string>
 
 </resources>

@@ -13,13 +13,8 @@
 
     <item
         android:id="@+id/chat"
-        android:title="@string/buddy_chat"
+        android:title="@string/chat"
         android:icon="@drawable/baseline_chat_icon"/>
-
-    <item
-        android:id="@+id/bot"
-        android:title="@string/chatbot"
-        android:icon="@drawable/baseline_bot_24"/>
 
     <item
         android:id="@+id/profile"
