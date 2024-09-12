@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".BuddyProfileActivity">
+    tools:context=".BuddyProfileActivity"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/buddyP_toolbar"
@@ -115,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/courseText"
                         android:layout_margin="20dp"
-                        android:text="Semester: "
+                        android:text="Year: "
                         android:textSize="15sp" />
 
                     <TextView

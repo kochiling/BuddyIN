@@ -14,7 +14,6 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -204,7 +203,7 @@ public class LoginFragment extends Fragment {
                 // Status 2: Approval failed
                 new AlertDialog.Builder(requireActivity())
                         .setTitle("Approval Failed")
-                        .setMessage("Your lecturer account approval has failed. Please contact support.")
+                        .setMessage("Your lecturer account approval has failed. Please contact support (admin@gmail.com).")
                         .setCancelable(false)
                         .setPositiveButton("OK", (dialog, which) -> mAuth.signOut())
                         .show();

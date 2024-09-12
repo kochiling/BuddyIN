@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,7 +37,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -57,12 +61,14 @@ public class ViewPostDetailActivity extends AppCompatActivity {
     String currimageProfile;
     String current_name;
 
-    DatabaseReference likeRef = FirebaseDatabase.getInstance().getReference("Post"); ;
+    DatabaseReference likeRef = FirebaseDatabase.getInstance().getReference("Post");
     Boolean LikeChecker = false;
     String currentUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
     boolean notify = false;
 
+    List<CommentModel> commentModelList;
+    CommentAdapter commentAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -92,8 +98,6 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         //Get buddy id
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-//            key = bundle.getString("key");
-//            Log.d(TAG, "key is" + Objects.requireNonNull(key));
             userID = bundle.getString("userID");
             username = bundle.getString("username");
             postImage = bundle.getString("postImage");
@@ -103,9 +107,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             user_profile = bundle.getString("userImage");
         }
 
-
-
-        //Get Buddy Profile image and name
+        //Get Current Profile image and name
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(currentUid);
         // Add a ValueEventListener to retrieve and update data
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -120,16 +122,10 @@ public class ViewPostDetailActivity extends AppCompatActivity {
                         Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
                         // Load the profile image using Glide
                         if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
-//                            Glide.with(ViewPostDetailActivity.this)
-//                                    .load(userProfile.getProfile_image())
-//                                    .into(profileImage);
                             currimageProfile = userProfile.getProfile_image();
                             current_name = userProfile.getUsername();
                             Log.d(TAG, current_name+currimageProfile);
 
-
-//                            // Update the TextView with the retrieved data
-//                            profile_name.setText(userProfile.getUsername());
                         }
                     } else {
                         Log.d(TAG, "User profile is null");
@@ -211,6 +207,39 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             }
         });
 
+        RecyclerView comment_rv = findViewById(R.id.comment_rv);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        comment_rv.setLayoutManager(linearLayoutManager);
+
+        commentModelList = new ArrayList<>();
+        commentAdapter = new CommentAdapter(this, commentModelList);
+        comment_rv.setAdapter(commentAdapter);
+
+        DatabaseReference databaseReference1 = FirebaseDatabase.getInstance().getReference("Post").child(postid).child("Comments");
+
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                commentModelList.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    CommentModel comments = snapshot1.getValue(CommentModel.class);
+                    commentModelList.add(comments);
+                }
+
+                commentAdapter.setCommentModelList(commentModelList);
+                commentAdapter.notifyDataSetChanged();
+
+                // Scroll to the latest comment
+                comment_rv.scrollToPosition(commentModelList.size() - 1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Error: " + error.getMessage());
+            }
+        });
+
+
     }
 
     private void sendComment(String comment){
@@ -262,4 +291,5 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         calendar.setTimeInMillis(Long.parseLong(timeStamp));
         return DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
     }
+
 }
