@@ -47,4 +47,10 @@
     <string name="_10_10_am">10:10 AM</string>
     <string name="chat">Chat</string>
 
+    <string name="open_nav">Open Navigation Drawer</string>
+    <string name="close_nav">Close Navigation Drawer</string>
+    <string name="pending_lecturer">Pending Lecturer</string>
+    <string name="approved_lecturer">Approved Lecturer</string>
+    <string name="rejected_lecturer">Rejected Lecturer</string>
+
 </resources>

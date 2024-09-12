@@ -81,24 +81,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             postViewHolder.user_time.setText(timestamp);
             Glide.with(context).load(item.getUser_profile()).into(postViewHolder.profileImage);
 
-            // Fetch user profile image
-//            userRef.child(item.getUser_id()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.exists()) {
-//                        String profileImageUrl = snapshot.child("profile_image").getValue(String.class);
-//                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-//                            Glide.with(context).load(profileImageUrl).into(((PostViewHolder) holder).profileImage);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Toast.makeText(context, "Failed to load user profile image.", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
             postViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -127,6 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
             postViewHolder.setLikeButtonStatus(item);
+            postViewHolder.setCommentNum(item);
 
             postViewHolder.postCard.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -152,24 +135,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             questionViewHolder.contextCard.setText(item.getDescription());
             questionViewHolder.user_time.setText(timestamp);
             Glide.with(context).load(item.getUser_profile()).into(questionViewHolder.profileImage);
-
-            // Fetch user profile image
-//            userRef.child(item.getUser_id()).addListenerForSingleValueEvent(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.exists()) {
-//                        String profileImageUrl = snapshot.child("profile_image").getValue(String.class);
-//                        if (profileImageUrl != null && !profileImageUrl.isEmpty()) {
-//                            Glide.with(context).load(profileImageUrl).into(((QuestionViewHolder) holder).profileImage);
-//                        }
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Toast.makeText(context, "Failed to load user profile image.", Toast.LENGTH_SHORT).show();
-//                }
-//            });
 
             questionViewHolder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -199,6 +164,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
 
             questionViewHolder.setLikeButtonStatus(item);
+            questionViewHolder.setCommentNum(item);
 
             questionViewHolder.postCard.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -244,6 +210,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         String currentUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         DatabaseReference likeRef = FirebaseDatabase.getInstance().getReference().child("Post");
         int likecounts;
+        int commentCount;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -258,6 +225,21 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             liked_textview = itemView.findViewById(R.id.liked_textview);
             comment_textview = itemView.findViewById(R.id.comment_textview);
 
+        }
+
+        public void setCommentNum(PostModel item){
+            likeRef.child(item.getPost_id()).child("Comments").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    commentCount= (int) snapshot.getChildrenCount();
+                    comment_textview.setText(Integer.toString(commentCount));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
         public void setLikeButtonStatus(PostModel item) {
@@ -292,6 +274,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         String currentUid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         DatabaseReference likeRef = FirebaseDatabase.getInstance().getReference().child("Post");
         int likecounts;
+        int commentCount;
 
         public QuestionViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -324,6 +307,21 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     // Handle error if necessary
+                }
+            });
+        }
+
+        public void setCommentNum(PostModel item){
+            likeRef.child(item.getPost_id()).child("Comments").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    commentCount= (int) snapshot.getChildrenCount();
+                    comment_textview.setText(Integer.toString(commentCount));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
                 }
             });
         }
