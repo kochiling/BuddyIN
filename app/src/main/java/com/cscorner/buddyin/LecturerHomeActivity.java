@@ -10,8 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cscorner.buddyin.lecturer.LecturerHomeFragment;
+import com.cscorner.buddyin.lecturer.LecturerProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
+
+import me.ibrahimsn.lib.OnItemSelectedListener;
+import me.ibrahimsn.lib.SmoothBottomBar;
 
 public class LecturerHomeActivity extends AppCompatActivity {
 
@@ -28,17 +36,27 @@ public class LecturerHomeActivity extends AppCompatActivity {
             return insets;
         });
 
-        logout = findViewById(R.id.logout);
+        replaceFragment(new LecturerHomeFragment());
+        SmoothBottomBar smoothBottomBar = findViewById(R.id.bottomBar);
+        smoothBottomBar.setOnItemSelectedListener((OnItemSelectedListener) i -> {
+            switch (i) {
+                case 0:
+                    replaceFragment(new LecturerHomeFragment());
+                    break;
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut(); // Sign out the user
-                // Redirect to a login activity
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                case 1:
+                    replaceFragment(new LecturerProfileFragment());
+                    break;
             }
+            return true;
         });
+
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }

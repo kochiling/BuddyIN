@@ -317,6 +317,7 @@ public class UploadPostActivity extends AppCompatActivity {
                 for (DataSnapshot item : snapshot.getChildren()) {
                     subjectList.add(Objects.requireNonNull(item.getValue()).toString());
                 }
+                subjectList.add("General Question");
                 subjectList.add("Others");
                 adapter.notifyDataSetChanged();
             }

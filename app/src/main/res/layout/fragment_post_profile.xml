@@ -5,10 +5,23 @@
     android:layout_height="match_parent"
     tools:context=".PostProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/posts_crv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/vertical_post_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/no_data_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text ="No Post Is Uploaded"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="30sp"/>
 
 </FrameLayout>

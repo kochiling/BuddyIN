@@ -51,7 +51,6 @@ import com.google.gson.JsonObject;
 
 public class BuddyRecommendFragment extends Fragment {
 
-     RecyclerView recyclerView;
      BuddyRecommendAdapter adapter;
      DatabaseReference matchResultsRef, usersRef, knnDataInfoRef;
      List<UserModel> UserList;

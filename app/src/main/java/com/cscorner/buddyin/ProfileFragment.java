@@ -7,8 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.bumptech.glide.Glide;
@@ -37,12 +42,11 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
 
     TabLayout tabLayout;
-    ViewPager viewPager;
+    ViewPager2 viewPager;
     ImageButton logout;
     ImageView profileimage;
     TextView profilename;
     FirebaseAuth mAuth;
-    FirebaseFirestore db;
     private DatabaseReference databaseReference;
 
     @Override
@@ -51,20 +55,10 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        tabLayout = view.findViewById(R.id.profiletab);
-        viewPager = view.findViewById(R.id.profile_vpager);
         logout = view.findViewById(R.id.logout);
         profileimage = view.findViewById(R.id.profileImage);
         profilename = view.findViewById(R.id.profile_name);
-        tabLayout.setupWithViewPager(viewPager);
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-
-//        BuddyPageAdapter vpAdapter = new BuddyPageAdapter(getChildFragmentManager());
-//
-//        vpAdapter.addfragment(new PostProfileFragment(), "Post");
-//        vpAdapter.addfragment(new NotesProfileFragment(), "Notes");
-//        viewPager.setAdapter(vpAdapter);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +113,28 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        tabLayout = view.findViewById(R.id.profiletab);
+        viewPager = view.findViewById(R.id.profile_vpager);
+
+        viewPager.setAdapter(new ProfileViewPagerAdapter(getActivity()));
+
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Posts");
+                    break;
+                case 1:
+                    tab.setText("Notes");
+                    break;
+            }
+        }).attach();
+
     }
 }
 

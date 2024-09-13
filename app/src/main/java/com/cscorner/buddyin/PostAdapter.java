@@ -122,6 +122,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     intent.putExtra("timestamp",postModelList.get(holder.getAdapterPosition()).getTimestamp());
                     intent.putExtra("postid",postModelList.get(holder.getAdapterPosition()).getPost_id());
                     intent.putExtra("userImage",postModelList.get(holder.getAdapterPosition()).getUser_profile());
+                    intent.putExtra("subject",postModelList.get(holder.getAdapterPosition()).getSubject());
                     intent.putExtra("key",postModelList.get(holder.getAdapterPosition()).getKey());
                     context.startActivity(intent);
                 }
@@ -177,6 +178,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     intent.putExtra("timestamp",postModelList.get(holder.getAdapterPosition()).getTimestamp());
                     intent.putExtra("postid",postModelList.get(holder.getAdapterPosition()).getPost_id());
                     intent.putExtra("userImage",postModelList.get(holder.getAdapterPosition()).getUser_profile());
+                    intent.putExtra("subject",postModelList.get(holder.getAdapterPosition()).getSubject());
                     intent.putExtra("key",postModelList.get(holder.getAdapterPosition()).getKey());
                     context.startActivity(intent);
                 }

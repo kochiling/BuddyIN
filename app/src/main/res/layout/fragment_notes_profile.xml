@@ -5,10 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".NotesProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notes_crv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/sf_item">
 
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/no_data_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text ="No Notes Is Uploaded"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="30sp"/>
 </FrameLayout>
