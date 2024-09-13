@@ -22,6 +22,8 @@ public class BuddyChatAdapter extends RecyclerView.Adapter<BuddyChatViewHolder>{
     private final Context context;
     private final List<UserModel> userModelList;
 
+
+
     public BuddyChatAdapter(Context context, List<UserModel> userModelList) {
         this.context = context;
         this.userModelList = userModelList;
@@ -48,6 +50,8 @@ public class BuddyChatAdapter extends RecyclerView.Adapter<BuddyChatViewHolder>{
                 context.startActivity(intent);
             }
         });
+
+
     }
 
     @Override

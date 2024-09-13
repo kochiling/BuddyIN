@@ -66,6 +66,7 @@ public class UploadNotesActivity extends AppCompatActivity {
     StorageReference storageReference;
     String PDF_url;
     Uri uri;
+    String profilenameuser;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -107,6 +108,7 @@ public class UploadNotesActivity extends AppCompatActivity {
                     if (userProfile != null) {
                         Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
                         profilename.setText(userProfile.getUsername());
+                        profilenameuser = userProfile.getUsername();
                     }
                 } else {
                     Log.d(TAG, "User profile is null");
@@ -210,13 +212,18 @@ public class UploadNotesActivity extends AppCompatActivity {
     private void saveInfo() {
         String subject = subjectCode_spinner.getText().toString().trim();
         String description = input_desc.getText().toString().trim();
-        String title = input_title.getText().toString().trim();
+        String title = (input_title.getText().toString().trim()+".pdf");
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        NotesModel notesModel = new NotesModel(subject,title, description, PDF_url);
+        // Reference to the "Post" node under the current user's ID
+        DatabaseReference notesRef = FirebaseDatabase.getInstance().getReference("Notes");
+        // Generate a unique key for the new post
+        String notes_id = notesRef.push().getKey();
 
-        //databaseReference = FirebaseDatabase.getInstance().getReference("Notes").child(subject);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Notes");
-        databaseReference.push().setValue(notesModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+//        NotesModel notesModel = new NotesModel(subject,title, description, PDF_url);
+        NotesModel notesModel1 = new NotesModel(notes_id,userId,profilenameuser,subject,title,description,PDF_url);
+
+        notesRef.child(notes_id).setValue(notesModel1).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -230,6 +237,23 @@ public class UploadNotesActivity extends AppCompatActivity {
                 Toast.makeText(UploadNotesActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
+
+//        //databaseReference = FirebaseDatabase.getInstance().getReference("Notes").child(subject);
+//        databaseReference = FirebaseDatabase.getInstance().getReference("Notes");
+//        databaseReference.push().setValue(notesModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(UploadNotesActivity.this, "Notes Uploaded Successfully", Toast.LENGTH_LONG).show();
+//                    finish();
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(UploadNotesActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private boolean validateSubject() {

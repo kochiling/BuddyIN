@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -27,7 +29,6 @@ public class BuddyFragment extends Fragment {
 
     TabLayout tabLayout;
     ViewPager2 viewPager;
-    BuddyPageAdapter buddyPageAdapter;
 
     @Nullable
     @Override
@@ -41,6 +42,11 @@ public class BuddyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         tabLayout = view.findViewById(R.id.buddytab);
         viewPager = view.findViewById(R.id.buddy_vpager);
+
+        Toolbar toolbar = view.findViewById(R.id.buddy_toolbar); //Ignore red line errors
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Buddy");
+        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
 
         viewPager.setAdapter(new MyViewPagerAdapter(getActivity()));
 

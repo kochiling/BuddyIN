@@ -47,10 +47,9 @@ public class ViewPostDetailActivity extends AppCompatActivity {
 
     ImageView post_image,profileImage;
     ImageButton send_btn,liked_btn;
-    TextView profile_name,context,time,liked_textview;
+    TextView profile_name,context,time,liked_textview,subject,comment_text;
     EditText comment_et;
 
-    String key = "";
     String userID = "";
     String username = "";
     String postImage = "";
@@ -58,8 +57,10 @@ public class ViewPostDetailActivity extends AppCompatActivity {
     String timestamp = "";
     String postid = "" ;
     String user_profile = "";
+    String subject_code = "";
     String currimageProfile;
     String current_name;
+    Integer commentCount;
 
     DatabaseReference likeRef = FirebaseDatabase.getInstance().getReference("Post");
     Boolean LikeChecker = false;
@@ -70,7 +71,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
     List<CommentModel> commentModelList;
     CommentAdapter commentAdapter;
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,8 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         time = findViewById(R.id.time);
         liked_textview = findViewById(R.id.liked_textview);
         comment_et = findViewById(R.id.comment_et);
+        comment_text = findViewById(R.id.comment);
+        subject = findViewById(R.id.subject);
 
         //Get buddy id
         Bundle bundle = getIntent().getExtras();
@@ -105,6 +108,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             timestamp = bundle.getString("timestamp");
             postid = bundle.getString("postid");
             user_profile = bundle.getString("userImage");
+            subject_code = bundle.getString("subject");
         }
 
         //Get Current Profile image and name
@@ -149,6 +153,14 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         String timestamp1 = formatTimestamp(timestamp);
         time.setText(timestamp1);
         Glide.with(context).load(user_profile).into(profileImage);
+
+//        subject.setText("Subject Code: " + subject_code);
+
+        if ("General Question".equals(subject_code)){
+            subject.setText(subject_code);
+        }else{
+            subject.setText("Subject Code: " + subject_code);
+        }
 
         if ("null".equals(postImage)) {
             post_image.setVisibility(View.GONE);
@@ -239,7 +251,25 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             }
         });
 
+        setCommentNumber();
 
+
+    }
+
+    private void setCommentNumber() {
+        likeRef.child(postid).child("Comments").addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                commentCount= (int) snapshot.getChildrenCount();
+                comment_text.setText("Comments "+ commentCount);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void sendComment(String comment){

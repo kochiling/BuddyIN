@@ -97,20 +97,4 @@ public class AdminHomePageActivity extends AppCompatActivity implements Navigati
         }
     }
 
-
-
-
-//        logout = findViewById(R.id.logout);
-//
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut(); // Sign out the user
-//                // Redirect to a login activity
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-
 }

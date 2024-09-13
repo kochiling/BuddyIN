@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UploadNotesActivity">
+    tools:context=".UploadNotesActivity"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/uploadN_toolbar"
@@ -58,7 +59,7 @@
             <AutoCompleteTextView
                 android:id="@+id/subjectCode_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginBottom="0dp"
                 android:background="@color/pink_box"
@@ -101,8 +102,7 @@
             app:counterMaxLength="100"
             app:errorEnabled="true"
             app:helperText="Rename for the PDF file"
-            app:helperTextEnabled="true"
-            app:helperTextTextColor="@color/purple">
+            app:helperTextEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_title"
