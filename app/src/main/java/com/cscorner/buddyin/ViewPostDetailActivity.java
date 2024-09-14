@@ -109,7 +109,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             postid = bundle.getString("postid");
             user_profile = bundle.getString("userImage");
             subject_code = bundle.getString("subject");
-        }
+        };
 
         //Get Current Profile image and name
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(currentUid);

@@ -30,6 +30,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -97,29 +98,7 @@ public class UploadNotesActivity extends AppCompatActivity {
 
         // Get Profile Name
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
-
-        userRef.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("StringFormatInvalid")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
-                    if (userProfile != null) {
-                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-                        profilename.setText(userProfile.getUsername());
-                        profilenameuser = userProfile.getUsername();
-                    }
-                } else {
-                    Log.d(TAG, "User profile is null");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d(TAG, "User profile is null");
-            }
-        });
+        checkLecturerStatus(userId);
 
         subjectList = new ArrayList<>();
         adapter = new ArrayAdapter<>(UploadNotesActivity.this, android.R.layout.simple_spinner_dropdown_item, subjectList);
@@ -254,6 +233,7 @@ public class UploadNotesActivity extends AppCompatActivity {
 //                Toast.makeText(UploadNotesActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
 //            }
 //        });
+
     }
 
     private boolean validateSubject() {
@@ -327,5 +307,70 @@ public class UploadNotesActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void checkLecturerStatus(String userId) {
+        DatabaseReference lecturerRef = FirebaseDatabase.getInstance().getReference("Lecturers").child(userId);
+
+        lecturerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Lecturers").child(userId);
+
+                    userRef.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("StringFormatInvalid")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                LecturerModel userProfile = dataSnapshot.getValue(LecturerModel.class);
+                                if (userProfile != null) {
+                                    Log.d(TAG, "User profile retrieved: " + userProfile.getName());
+                                    profilename.setText(userProfile.getName());
+                                    profilenameuser = userProfile.getName();
+                                }
+                            } else {
+                                Log.d(TAG, "User profile is null");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d(TAG, "User profile is null");
+                        }
+                    });
+                } else {
+                    // Reference to "User Info" under the current user
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
+
+                    userRef.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("StringFormatInvalid")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                UserModel userProfile = dataSnapshot.getValue(UserModel.class);
+                                if (userProfile != null) {
+                                    Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
+                                    profilename.setText(userProfile.getUsername());
+                                    profilenameuser = userProfile.getUsername();
+                                }
+                            } else {
+                                Log.d(TAG, "User profile is null");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.d(TAG, "User profile is null");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UploadNotesActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
