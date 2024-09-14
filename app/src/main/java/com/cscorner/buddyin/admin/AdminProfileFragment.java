@@ -1,66 +1,96 @@
 package com.cscorner.buddyin.admin;
 
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.cscorner.buddyin.MainActivity;
 import com.cscorner.buddyin.R;
+import com.cscorner.buddyin.UserModel;
+import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AdminProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Objects;
+
 public class AdminProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AdminProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AdminProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AdminProfileFragment newInstance(String param1, String param2) {
-        AdminProfileFragment fragment = new AdminProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    TabLayout tabLayout;
+    ViewPager2 viewPager;
+    ImageView profileimage;
+    TextView profilename;
+    FirebaseAuth mAuth;
+    private DatabaseReference databaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_profile, container, false);
+
+        profileimage = view.findViewById(R.id.profileImage);
+        profilename = view.findViewById(R.id.profile_name);
+        mAuth = FirebaseAuth.getInstance();
+
+        // Get the current user ID
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
+        // Reference to "Admin" node under the current user
+        DatabaseReference adminReference = FirebaseDatabase.getInstance().getReference("Admin").child(userId);
+
+// Add a ValueEventListener to retrieve and update data
+        adminReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Retrieve the admin details directly without using a model class
+                    String name = dataSnapshot.child("username").getValue(String.class);
+                    String profileImage = dataSnapshot.child("profile_image").getValue(String.class);
+
+                    // Logging the data for debugging
+                    Log.d(TAG, "Admin Name: " + name);
+                    Log.d(TAG, "Admin Profile Image: " + profileImage);
+
+                    // Display the admin data in your UI
+                    if (profileImage != null && !profileImage.isEmpty()) {
+                        Glide.with(getContext())
+                                .load(profileImage)
+                                .into(profileimage); // Assuming profileimage is an ImageView
+                    }
+
+                    // Update the TextView with the retrieved data
+                    profilename.setText(name);
+                } else {
+                    Log.d(TAG, "Admin data does not exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e(TAG, "Error: " + databaseError.getMessage());
+            }
+        });
+
+
+        return view;
     }
 }

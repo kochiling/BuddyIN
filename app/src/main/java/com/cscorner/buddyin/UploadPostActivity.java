@@ -95,34 +95,10 @@ public class UploadPostActivity extends AppCompatActivity {
         //Get Profile Name
         // Get the current user ID
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+        checkLecturerStatus(userId);
 
-//        // Reference to "User Info" under the current user
-//        databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
-//
-//        // Add a ValueEventListener to retrieve and update data
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint("StringFormatInvalid")
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Use the UserModel class to map the data from the database
-//                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
-//                    if (userProfile != null) {
-//                        // Debugging log
-//                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-//                        // Update the TextView with the retrieved data
-//                        profilename.setText(userProfile.getUsername());
-//                    }
-//                } else {
-//                    Log.d(TAG, "User profile is null");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d(TAG, "User profile is null");
-//            }
-//        });
+
+
 
 
         // Reference to "User Info" under the current user
@@ -361,5 +337,101 @@ public class UploadPostActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void checkLecturerStatus(String userId) {
+        DatabaseReference lecturerRef = FirebaseDatabase.getInstance().getReference("Lecturers").child(userId);
+
+        lecturerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Reference to "User Info" under the current user
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Lecturers").child(userId);
+
+                    // Add a ValueEventListener to retrieve and update data
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("StringFormatInvalid")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // Use the UserModel class to map the data from the database
+                                LecturerModel userProfile = dataSnapshot.getValue(LecturerModel.class);
+                                if (userProfile != null) {
+                                    // Debugging log
+                                    Log.d(TAG, "User profile retrieved: " + userProfile.getName());
+                                    // Load the profile image using Glide
+                                    if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+                                        Glide.with(UploadPostActivity.this)
+                                                .load(userProfile.getProfile_image())
+                                                .into(profileimage);
+
+                                        imageProfile = userProfile.getProfile_image();
+                                        Log.d(TAG,imageProfile);
+
+                                        // Update the TextView with the retrieved data
+                                        profilename.setText(userProfile.getName());
+                                    }
+                                } else {
+                                    Log.d(TAG, "User profile is null");
+                                }
+                            } else {
+                                Log.d(TAG, "Data snapshot does not exist");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e(TAG, "Error: " + databaseError.getMessage());
+                        }
+                    });
+                } else {
+                    // Reference to "User Info" under the current user
+                    databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
+
+                    // Add a ValueEventListener to retrieve and update data
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("StringFormatInvalid")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // Use the UserModel class to map the data from the database
+                                UserModel userProfile = dataSnapshot.getValue(UserModel.class);
+                                if (userProfile != null) {
+                                    // Debugging log
+                                    Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
+                                    // Load the profile image using Glide
+                                    if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+                                        Glide.with(UploadPostActivity.this)
+                                                .load(userProfile.getProfile_image())
+                                                .into(profileimage);
+
+                                        imageProfile = userProfile.getProfile_image();
+                                        Log.d(TAG,imageProfile);
+
+                                        // Update the TextView with the retrieved data
+                                        profilename.setText(userProfile.getUsername());
+                                    }
+                                } else {
+                                    Log.d(TAG, "User profile is null");
+                                }
+                            } else {
+                                Log.d(TAG, "Data snapshot does not exist");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e(TAG, "Error: " + databaseError.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UploadPostActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
