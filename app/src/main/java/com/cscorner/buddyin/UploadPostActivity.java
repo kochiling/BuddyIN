@@ -95,51 +95,47 @@ public class UploadPostActivity extends AppCompatActivity {
         //Get Profile Name
         // Get the current user ID
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        checkLecturerStatus(userId);
+        checkUserRole(userId);
 
-
-
-
-
-        // Reference to "User Info" under the current user
-        databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
-
-        // Add a ValueEventListener to retrieve and update data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("StringFormatInvalid")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Use the UserModel class to map the data from the database
-                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
-                    if (userProfile != null) {
-                        // Debugging log
-                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-                        // Load the profile image using Glide
-                        if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
-                            Glide.with(UploadPostActivity.this)
-                                    .load(userProfile.getProfile_image())
-                                    .into(profileimage);
-
-                            imageProfile = userProfile.getProfile_image();
-                            Log.d(TAG,imageProfile);
-
-                            // Update the TextView with the retrieved data
-                            profilename.setText(userProfile.getUsername());
-                        }
-                    } else {
-                        Log.d(TAG, "User profile is null");
-                    }
-                } else {
-                    Log.d(TAG, "Data snapshot does not exist");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error: " + databaseError.getMessage());
-            }
-        });
+//        // Reference to "User Info" under the current user
+//        databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
+//
+//        // Add a ValueEventListener to retrieve and update data
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("StringFormatInvalid")
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Use the UserModel class to map the data from the database
+//                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
+//                    if (userProfile != null) {
+//                        // Debugging log
+//                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
+//                        // Load the profile image using Glide
+//                        if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+//                            Glide.with(UploadPostActivity.this)
+//                                    .load(userProfile.getProfile_image())
+//                                    .into(profileimage);
+//
+//                            imageProfile = userProfile.getProfile_image();
+//                            Log.d(TAG,imageProfile);
+//
+//                            // Update the TextView with the retrieved data
+//                            profilename.setText(userProfile.getUsername());
+//                        }
+//                    } else {
+//                        Log.d(TAG, "User profile is null");
+//                    }
+//                } else {
+//                    Log.d(TAG, "Data snapshot does not exist");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e(TAG, "Error: " + databaseError.getMessage());
+//            }
+//        });
 
 
         subjectList = new ArrayList<>();
@@ -337,6 +333,44 @@ public class UploadPostActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void checkUserRole(String userId) {
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(userId);
+
+        adminRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && Boolean.TRUE.equals(dataSnapshot.child("isAdmin").getValue(Boolean.class))) {
+
+                    // Retrieve the admin details directly without using a model class
+                    String name = dataSnapshot.child("username").getValue(String.class);
+                    String profileImage = dataSnapshot.child("profile_image").getValue(String.class);
+
+                    // Logging the data for debugging
+                    Log.d(TAG, "Admin Name: " + name);
+                    Log.d(TAG, "Admin Profile Image: " + profileImage);
+                    // Display the admin data in your UI
+                    if (profileImage != null && !profileImage.isEmpty()) {
+                        Glide.with(UploadPostActivity.this)
+                                .load(profileImage)
+                                .into(profileimage); // Assuming profileimage is an ImageView
+                    }
+                    imageProfile = dataSnapshot.child("profile_image").getValue(String.class);
+                    // Update the TextView with the retrieved data
+
+                    profilename.setText(name);
+                } else {
+                    // Check if the user is a lecturer
+                    checkLecturerStatus(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UploadPostActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void checkLecturerStatus(String userId) {
