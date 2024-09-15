@@ -96,7 +96,7 @@ public class BuddyListFragment extends Fragment {
                 } else {
                     Log.d(TAG, "UserModel is null for buddyId: " + buddyId);
                 }
-
+                adapter.setRequestModel(UserList);
                 adapter.notifyDataSetChanged();
                 noDataText.setVisibility(UserList.isEmpty() ? View.VISIBLE : View.GONE);
             }

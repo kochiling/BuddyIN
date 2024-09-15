@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHolder> {
     private final Context context;
-    private final List<UserModel> userModelList;
+    private List<UserModel> userModelList;
 
     public BuddyRequestAdapter(Context context, List<UserModel> userModelList) {
         this.context = context;
@@ -94,6 +94,10 @@ public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHo
 //                                statusRef.setValue(hashMap);
 //                                statusMyRef.setValue(hashMap);
 
+                                int positionToRemove = holder.getAdapterPosition();
+                                userModelList.remove(positionToRemove);
+                                notifyItemRemoved(positionToRemove);
+
                                 // Show success message
                                 Toast.makeText(v.getContext(), "Buddy request accepted", Toast.LENGTH_SHORT).show();
                             } else {
@@ -109,20 +113,69 @@ public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHo
             }
         });
 
-        holder.rec_card.setOnClickListener(new View.OnClickListener() {
+        holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BuddyProfileActivity.class);
-                intent.putExtra("userID",userModelList.get(holder.getAdapterPosition()).getUser_id());
-                intent.putExtra("key",userModelList.get(holder.getAdapterPosition()).getKey());
-                context.startActivity(intent);
+                String currentUserId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                String requestUserId = userModelList.get(holder.getAdapterPosition()).getKey();
+
+                // References for the current user's requests
+                DatabaseReference userReceivedRef = FirebaseDatabase.getInstance().getReference("Buddies").child("friend_requests")
+                        .child(currentUserId)
+                        .child("received")
+                        .child(requestUserId);
+
+                DatabaseReference userSentRef = FirebaseDatabase.getInstance().getReference("Buddies").child("friend_requests")
+                        .child(requestUserId)
+                        .child("sent")
+                        .child(currentUserId);
+
+
+                // Update friend request status and add to friend list
+                userReceivedRef.setValue(false).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        userSentRef.setValue(false).addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+
+                                int positionToRemove = holder.getAdapterPosition();
+                                userModelList.remove(positionToRemove);
+                                notifyItemRemoved(positionToRemove);
+                                // Show success message
+                                Toast.makeText(v.getContext(), "Buddy rejected", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Failed to update sent request
+                                Toast.makeText(v.getContext(), "Failed to update request", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        // Failed to update received request
+                        Toast.makeText(v.getContext(), "Failed to update request", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
+
+
+
+//        holder.rec_card.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, BuddyProfileActivity.class);
+//                intent.putExtra("userID",userModelList.get(holder.getAdapterPosition()).getUser_id());
+//                intent.putExtra("key",userModelList.get(holder.getAdapterPosition()).getKey());
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
         return (userModelList.size());
+    }
+
+    public void setRequestModel(List<UserModel> userModelList) {
+        this.userModelList = userModelList;
+        notifyDataSetChanged();
     }
 }
 class BuddyRequestViewHolder extends RecyclerView.ViewHolder {

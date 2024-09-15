@@ -45,9 +45,9 @@ import java.util.Objects;
 
 public class ViewPostDetailActivity extends AppCompatActivity {
 
-    ImageView post_image,profileImage;
-    ImageButton send_btn,liked_btn;
-    TextView profile_name,context,time,liked_textview,subject,comment_text;
+    ImageView post_image, profileImage;
+    ImageButton send_btn, liked_btn;
+    TextView profile_name, context, time, liked_textview, subject, comment_text;
     EditText comment_et;
 
     String userID = "";
@@ -55,7 +55,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
     String postImage = "";
     String desc = "";
     String timestamp = "";
-    String postid = "" ;
+    String postid = "";
     String user_profile = "";
     String subject_code = "";
     String currimageProfile;
@@ -111,39 +111,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             subject_code = bundle.getString("subject");
         };
 
-        //Get Current Profile image and name
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(currentUid);
-        // Add a ValueEventListener to retrieve and update data
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("StringFormatInvalid")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Use the UserModel class to map the data from the database
-                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
-                    if (userProfile != null) {
-                        // Debugging log
-                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-                        // Load the profile image using Glide
-                        if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
-                            currimageProfile = userProfile.getProfile_image();
-                            current_name = userProfile.getUsername();
-                            Log.d(TAG, current_name+currimageProfile);
-
-                        }
-                    } else {
-                        Log.d(TAG, "User profile is null");
-                    }
-                } else {
-                    Log.d(TAG, "Data snapshot does not exist");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e(TAG, "Error: " + databaseError.getMessage());
-            }
-        });
+        checkUserRole(currentUid);
 
 //        imageUrl = bundle.getString("Image");
 //        Glide.with(this).load(bundle.getString("Image")).into(detailImage);
@@ -156,9 +124,9 @@ public class ViewPostDetailActivity extends AppCompatActivity {
 
 //        subject.setText("Subject Code: " + subject_code);
 
-        if ("General Question".equals(subject_code)){
+        if ("General Question".equals(subject_code)) {
             subject.setText(subject_code);
-        }else{
+        } else {
             subject.setText("Subject Code: " + subject_code);
         }
 
@@ -173,7 +141,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ViewChatImageActivity.class);
-                intent.putExtra("imageUrl", postImage );
+                intent.putExtra("imageUrl", postImage);
                 startActivity(intent);
             }
         });
@@ -261,8 +229,8 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                commentCount= (int) snapshot.getChildrenCount();
-                comment_text.setText("Comments "+ commentCount);
+                commentCount = (int) snapshot.getChildrenCount();
+                comment_text.setText("Comments " + commentCount);
             }
 
             @Override
@@ -272,12 +240,12 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void sendComment(String comment){
+    private void sendComment(String comment) {
         DatabaseReference comRef = FirebaseDatabase.getInstance().getReference("Post").child(postid).child("Comments");
         String timestamp = String.valueOf(System.currentTimeMillis());
         String comment_id = comRef.push().getKey();
 
-        CommentModel commentModel = new CommentModel(currentUid,current_name,currimageProfile,timestamp,comment,comment_id);
+        CommentModel commentModel = new CommentModel(currentUid, current_name, currimageProfile, timestamp, comment, comment_id);
 
         comRef.child(comment_id).setValue(commentModel).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -320,6 +288,126 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(Long.parseLong(timeStamp));
         return DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+    }
+
+    private void checkUserRole(String currentUid){
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(currentUid);
+
+        adminRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && Boolean.TRUE.equals(dataSnapshot.child("isAdmin").getValue(Boolean.class))) {
+
+                    // Retrieve the admin details directly without using a model class
+                    String name = dataSnapshot.child("username").getValue(String.class);
+                    String profileImage = dataSnapshot.child("profile_image").getValue(String.class);
+
+                    // Logging the data for debugging
+                    Log.d(TAG, "Admin Name: " + name);
+                    Log.d(TAG, "Admin Profile Image: " + profileImage);
+
+                    currimageProfile = dataSnapshot.child("profile_image").getValue(String.class);
+                    // Update the TextView with the retrieved data
+
+                    current_name = dataSnapshot.child("username").getValue(String.class);
+                } else {
+                    // Check if the user is a lecturer
+                    checkLecturerStatus(currentUid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(ViewPostDetailActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void checkLecturerStatus(String currentUid) {
+        DatabaseReference lecturerRef = FirebaseDatabase.getInstance().getReference("Lecturers").child(currentUid);
+
+        lecturerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DatabaseReference databaseReference;
+                if (dataSnapshot.exists()) {
+                    // Reference to "User Info" under the current user
+                    databaseReference = FirebaseDatabase.getInstance().getReference("Lecturers").child(currentUid);
+
+                    // Add a ValueEventListener to retrieve and update data
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("StringFormatInvalid")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // Use the UserModel class to map the data from the database
+                                LecturerModel userProfile = dataSnapshot.getValue(LecturerModel.class);
+                                if (userProfile != null) {
+                                    // Debugging log
+                                    Log.d(TAG, "User profile retrieved: " + userProfile.getName());
+                                    // Load the profile image using Glide
+                                    if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+                                        currimageProfile = userProfile.getProfile_image();
+                                        current_name = userProfile.getName();
+                                        Log.d(TAG, current_name + currimageProfile);
+
+                                    }
+                                } else {
+                                    Log.d(TAG, "User profile is null");
+                                }
+                            } else {
+                                Log.d(TAG, "Data snapshot does not exist");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e(TAG, "Error: " + databaseError.getMessage());
+                        }
+                    });
+                } else {
+                    //Get Current Profile image and name
+                    databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(currentUid);
+                    // Add a ValueEventListener to retrieve and update data
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("StringFormatInvalid")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                // Use the UserModel class to map the data from the database
+                                UserModel userProfile = dataSnapshot.getValue(UserModel.class);
+                                if (userProfile != null) {
+                                    // Debugging log
+                                    Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
+                                    // Load the profile image using Glide
+                                    if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+                                        currimageProfile = userProfile.getProfile_image();
+                                        current_name = userProfile.getUsername();
+                                        Log.d(TAG, current_name + currimageProfile);
+
+                                    }
+                                } else {
+                                    Log.d(TAG, "User profile is null");
+                                }
+                            } else {
+                                Log.d(TAG, "Data snapshot does not exist");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e(TAG, "Error: " + databaseError.getMessage());
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(ViewPostDetailActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

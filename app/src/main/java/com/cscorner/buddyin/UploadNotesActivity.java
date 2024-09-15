@@ -98,7 +98,7 @@ public class UploadNotesActivity extends AppCompatActivity {
 
         // Get Profile Name
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        checkLecturerStatus(userId);
+        checkUserRole(userId);
 
         subjectList = new ArrayList<>();
         adapter = new ArrayAdapter<>(UploadNotesActivity.this, android.R.layout.simple_spinner_dropdown_item, subjectList);
@@ -307,6 +307,36 @@ public class UploadNotesActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void checkUserRole(String userId) {
+        DatabaseReference adminRef = FirebaseDatabase.getInstance().getReference("Admin").child(userId);
+
+        adminRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && Boolean.TRUE.equals(dataSnapshot.child("isAdmin").getValue(Boolean.class))) {
+
+                    // Retrieve the admin details directly without using a model class
+                    String name = dataSnapshot.child("username").getValue(String.class);
+
+                    // Logging the data for debugging
+                    Log.d(TAG, "Admin Name: " + name);
+
+                    // Update the TextView with the retrieved data
+                    profilename.setText(name);
+                    profilenameuser = name;
+                } else {
+                    // Check if the user is a lecturer
+                    checkLecturerStatus(userId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UploadNotesActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void checkLecturerStatus(String userId) {
