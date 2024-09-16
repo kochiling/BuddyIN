@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesViewHolder>{
@@ -67,6 +68,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesViewHolder>{
     @Override
     public int getItemCount() {
         return notesModelList.size();
+    }
+
+    public void searchDataList(ArrayList<NotesModel> searchList) {
+        this.notesModelList = searchList;  // Update the list with the filtered subjects
+        notifyDataSetChanged();
     }
 }
 

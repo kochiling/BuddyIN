@@ -30,6 +30,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".RequestBuddyProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchBuddyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchPostNotesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewPostDetailActivity"
             android:exported="false" />
         <activity

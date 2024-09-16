@@ -157,15 +157,15 @@ public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHo
 
 
 
-//        holder.rec_card.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, BuddyProfileActivity.class);
-//                intent.putExtra("userID",userModelList.get(holder.getAdapterPosition()).getUser_id());
-//                intent.putExtra("key",userModelList.get(holder.getAdapterPosition()).getKey());
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.rec_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, RequestBuddyProfileActivity.class);
+                intent.putExtra("userID",userModelList.get(holder.getAdapterPosition()).getUser_id());
+                intent.putExtra("key",userModelList.get(holder.getAdapterPosition()).getKey());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

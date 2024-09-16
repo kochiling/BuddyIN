@@ -52,5 +52,8 @@
     <string name="pending_lecturer">Pending Lecturer</string>
     <string name="approved_lecturer">Approved Lecturer</string>
     <string name="rejected_lecturer">Rejected Lecturer</string>
+    <string name="upload">Upload</string>
+    <string name="search">Search</string>
+    <string name="no_results">No Results</string>
 
 </resources>

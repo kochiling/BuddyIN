@@ -1,11 +1,14 @@
 package com.cscorner.buddyin;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MenuInflater;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
@@ -45,13 +48,12 @@ public class NotesSubjectActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.nbs_toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Notes Sub");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("View All Notes");
         // Enable the Up button (back button)
         toolbar.setTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.nbs_rv);
-
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(NotesSubjectActivity.this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -66,9 +68,9 @@ public class NotesSubjectActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 notesModelList.clear();
-                for (DataSnapshot itemSnapshot: snapshot.getChildren()){
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
                     NotesModel dataClass = itemSnapshot.getValue(NotesModel.class);
-                   notesModelList.add(dataClass);
+                    notesModelList.add(dataClass);
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -78,16 +80,61 @@ public class NotesSubjectActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+        if (item.getItemId() == android.R.id.home) {
+            // Handle the Up button click (e.g., navigate back)
             onBackPressed();
             finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_top, menu);
+
+        // Get the search menu item
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        // Set up the query listener
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Perform the final search when user submits
+                filterResults(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Perform search as text changes
+                filterResults(newText);
+                return true;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void filterResults(String query) {
+        // Filter for notes using a separate list
+        ArrayList<NotesModel> searchList = new ArrayList<>();
+        for (NotesModel note : notesModelList) {
+            if (note.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                    note.getUser_name().toLowerCase().contains(query.toLowerCase()) ||
+                    note.getSubject().toLowerCase().contains(query.toLowerCase()) ||
+                    note.getFile_title().toLowerCase().contains(query.toLowerCase())) {
+                searchList.add(note);
+            }
+        }
+        adapter.searchDataList(searchList);  // Update adapter with the filtered list
+
+        // Notify the adapter of data changes
+        adapter.notifyDataSetChanged();
     }
 }
