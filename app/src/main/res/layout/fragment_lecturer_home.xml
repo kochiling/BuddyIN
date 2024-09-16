@@ -21,6 +21,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/action_search"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/search"
+            android:src="@drawable/baseline_search_24"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
+            app:layout_constraintEnd_toEndOf="@+id/home_toolbar"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

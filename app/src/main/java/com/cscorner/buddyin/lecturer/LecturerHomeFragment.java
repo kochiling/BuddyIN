@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.cscorner.buddyin.MainActivity;
@@ -23,6 +24,7 @@ import com.cscorner.buddyin.NotesSubjectActivity;
 import com.cscorner.buddyin.PostAdapter;
 import com.cscorner.buddyin.PostModel;
 import com.cscorner.buddyin.R;
+import com.cscorner.buddyin.SearchPostNotesActivity;
 import com.cscorner.buddyin.SubjectAdapter;
 import com.cscorner.buddyin.UploadNotesActivity;
 import com.cscorner.buddyin.UploadPostActivity;
@@ -49,6 +51,7 @@ public class LecturerHomeFragment extends Fragment {
     Button viewallbtn;
     DatabaseReference databaseReference;
     ValueEventListener eventListener;
+    ImageButton action_search;
 
     public LecturerHomeFragment() {
         // Required empty public constructor
@@ -160,6 +163,15 @@ public class LecturerHomeFragment extends Fragment {
         viewallbtn.setOnClickListener((View v) -> {
             Intent intent = new Intent(getContext(), NotesSubjectActivity.class);
             startActivity(intent);
+        });
+
+        action_search = view.findViewById(R.id.action_search);
+        action_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), SearchPostNotesActivity.class);
+                startActivity(intent);
+            }
         });
 
         return view;

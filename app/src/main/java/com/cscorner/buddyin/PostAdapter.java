@@ -1,5 +1,6 @@
 package com.cscorner.buddyin;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.format.DateFormat;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -202,6 +204,12 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         return postModelList.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void searchDataList(ArrayList<PostModel> searchList) {
+        this.postModelList = searchList;  // Update the list with the filtered subjects
+        notifyDataSetChanged();
     }
 
     static class PostViewHolder extends RecyclerView.ViewHolder {

@@ -16,7 +16,7 @@ import java.util.List;
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectViewHolder> {
 
     private final Context context;
-    private final List<String> sublist;
+    private  List<String> sublist;
 
     public SubjectAdapter(Context context, List<String> sublist) {
         this.context = context;
@@ -51,6 +51,11 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectViewHolder> {
     @Override
     public int getItemCount() {
         return sublist.size();
+    }
+
+    public void searchDataList(List<String> filteredList) {
+        this.sublist = filteredList;  // Update the list with the filtered subjects
+        notifyDataSetChanged();  // Notify the adapter about the data change
     }
 }
 

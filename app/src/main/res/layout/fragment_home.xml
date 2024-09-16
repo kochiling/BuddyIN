@@ -31,6 +31,17 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="HardcodedText,MissingConstraints" />
 
+        <ImageButton
+            android:id="@+id/action_search"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/search"
+            android:src="@drawable/baseline_search_24"
+            android:layout_marginTop="5dp"
+            android:background="@color/transparent"
+            app:layout_constraintEnd_toEndOf="@+id/home_toolbar"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearH"
             android:orientation="horizontal"
@@ -100,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/red_btn"
-            android:contentDescription="Upload"
+            android:contentDescription="@string/upload"
             android:src="@drawable/baseline_add_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +119,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.952" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
