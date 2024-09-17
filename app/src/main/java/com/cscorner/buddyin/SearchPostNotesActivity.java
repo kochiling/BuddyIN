@@ -74,8 +74,6 @@ public class SearchPostNotesActivity extends AppCompatActivity {
         recyclerViewV.setVisibility(View.GONE);
         recyclerViewH.setVisibility(View.GONE);
 
-
-
         // Set up horizontal RecyclerView for subjects
         subList = new ArrayList<>();
         recyclerViewH.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
