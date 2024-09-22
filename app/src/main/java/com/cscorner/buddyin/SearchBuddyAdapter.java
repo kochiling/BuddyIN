@@ -62,83 +62,104 @@ public class SearchBuddyAdapter extends RecyclerView.Adapter<SearchBuddyViewHold
         DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference("Buddies").child("friend").child(currentUserId).child("list").child(buddyId);
 
         // Handle card click event
-        holder.rec_card.setOnClickListener(v -> {
-            // First, check if the buddy is in match results
-            matchRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot matchSnapshot) {
-                    boolean isMatch = matchSnapshot.exists() && Boolean.TRUE.equals(matchSnapshot.getValue(Boolean.class));
+        holder.rec_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if the buddyId is equal to the currentUserId (i.e., user is viewing their own profile)
+                if (buddyId.equals(currentUserId)) {
+                    // Navigate to NewBuddyProfileActivity since it's the user's own profile
+                    Intent intent = new Intent(context, NewBuddyProfileActivity.class);
+                    intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                    intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+                    context.startActivity(intent);
+                    return;  // Exit the method as we already handled the case
+                }
 
-                    // Check for friend requests (sent or received)
-                    requestSentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot sentSnapshot) {
-                            boolean isSentRequest = sentSnapshot.exists(); // Check if the request was sent
-
-                            requestReceivedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                // Proceed with checking the buddy status (friend, request, match)
+                friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot friendSnapshot) {
+                        if (friendSnapshot.exists() && Boolean.TRUE.equals(friendSnapshot.getValue(Boolean.class))) {
+                            // Buddy is a friend, navigate to NewBuddyProfileActivity
+                            Intent intent = new Intent(context, NewBuddyProfileActivity.class);
+                            intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                            intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+                            context.startActivity(intent);
+                        } else {
+                            // Check if the buddy has a sent friend request (requestSentRef)
+                            requestSentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot receivedSnapshot) {
-                                    boolean isReceivedRequest = receivedSnapshot.exists(); // Check if there's a received request
+                                public void onDataChange(@NonNull DataSnapshot sentSnapshot) {
+                                    if (sentSnapshot.exists() && Boolean.TRUE.equals(sentSnapshot.getValue(Boolean.class))) {
+                                        // Buddy is in sent friend requests, navigate to NewBuddyProfileActivity
+                                        Intent intent = new Intent(context, NewBuddyProfileActivity.class);
+                                        intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                                        intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+                                        context.startActivity(intent);
+                                    } else {
+                                        // Check if the buddy has received a friend request (requestReceivedRef)
+                                        requestReceivedRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot receivedSnapshot) {
+                                                if (receivedSnapshot.exists() && Boolean.TRUE.equals(receivedSnapshot.getValue(Boolean.class))) {
+                                                    // Buddy has received a friend request, navigate to RequestBuddyProfileActivity
+                                                    Intent intent = new Intent(context, RequestBuddyProfileActivity.class);
+                                                    intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                                                    intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+                                                    context.startActivity(intent);
+                                                } else {
+                                                    // Check the match status (matchRef)
+                                                    matchRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot matchSnapshot) {
+                                                            if (matchSnapshot.exists()) {
+                                                                // Match found (either true or false), navigate to BuddyProfileActivity
+                                                                Intent intent = new Intent(context, BuddyProfileActivity.class);
+                                                                intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                                                                intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+                                                                context.startActivity(intent);
+                                                            } else {
+                                                                // No match, no requests, no friends, default to BuddyProfileActivity
+                                                                Intent intent = new Intent(context, BuddyProfileActivity.class);
+                                                                intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                                                                intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+                                                                context.startActivity(intent);
+                                                            }
+                                                        }
 
-                                    // Now, check if the buddy is a friend
-                                    friendRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot friendSnapshot) {
-                                            boolean isFriend = friendSnapshot.exists(); // Check if they're already friends
-
-                                            // Logic to determine the correct page based on buddy status
-                                            Intent intent;
-                                            if (isFriend) {
-                                                // Show in Buddy Chat Page
-                                                intent = new Intent(context, NewBuddyProfileActivity.class);
-                                            } else if (isReceivedRequest) {
-                                                // Show in Request Page for received friend requests
-                                                intent = new Intent(context, RequestBuddyProfileActivity.class);
-                                            } else if (isSentRequest) {
-                                                // Show in a page for sent friend requests (if you have one)
-                                                intent = new Intent(context, NewBuddyProfileActivity.class);
-                                            } else if (isMatch) {
-                                                // Show in Recommend 2 Page if matched but not friends
-                                                intent = new Intent(context,BuddyProfileActivity.class);
-                                            } else {
-                                                // Show in Recommend Page if neither matched nor friends
-                                                intent = new Intent(context, BuddyProfileActivity.class);
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                            Log.e("SearchBuddyAdapter", "Error checking match status: " + databaseError.getMessage());
+                                                        }
+                                                    });
+                                                }
                                             }
 
-                                            // Pass the necessary buddy data to the intent
-                                            intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
-                                            intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
-                                            context.startActivity(intent);
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-                                            Log.e("SearchBuddyAdapter", "Error checking friend status: " + error.getMessage());
-                                        }
-                                    });
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                Log.e("SearchBuddyAdapter", "Error checking received request: " + databaseError.getMessage());
+                                            }
+                                        });
+                                    }
                                 }
 
                                 @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Log.e("SearchBuddyAdapter", "Error checking received friend request: " + error.getMessage());
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Log.e("SearchBuddyAdapter", "Error checking sent request: " + databaseError.getMessage());
                                 }
                             });
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e("SearchBuddyAdapter", "Error checking sent friend request: " + error.getMessage());
-                        }
-                    });
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.e("SearchBuddyAdapter", "Error checking match status: " + error.getMessage());
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("SearchBuddyAdapter", "Error checking friend status: " + databaseError.getMessage());
+                    }
+                });
+            }
         });
     }
+
 
     @Override
     public int getItemCount() {

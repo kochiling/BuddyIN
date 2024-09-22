@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class ProfileFragment extends Fragment {
     TextView profilename;
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    Button edit_pro_btn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +61,7 @@ public class ProfileFragment extends Fragment {
         profileimage = view.findViewById(R.id.profileImage);
         profilename = view.findViewById(R.id.profile_name);
         mAuth = FirebaseAuth.getInstance();
+        edit_pro_btn = view.findViewById(R.id.edit_pro_btn);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +112,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
+            }
+        });
+
+        edit_pro_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+                startActivity(intent);
             }
         });
 
