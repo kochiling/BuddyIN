@@ -110,15 +110,36 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //CourseType
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.coursesinput, R.layout.drop_down_item);
-        adapter1.setDropDownViewResource(R.layout.drop_down_item);
-        courseinput.setAdapter(adapter1);
-
-        courseinput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        courseinput.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(RegisterActivity.this, courseinput.getText().toString(), Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                // Course Array
+                String[] courseArray = getResources().getStringArray(R.array.coursesinput);
+
+                // Initialize alert dialog for course selection
+                AlertDialog.Builder courseBuilder = new AlertDialog.Builder(RegisterActivity.this);
+                courseBuilder.setTitle("Select Course");
+
+                // Create custom adapter for the list with gaps between items
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(RegisterActivity.this, R.layout.drop_down_item, courseArray);
+
+                // Set the custom adapter with items and spacing
+                courseBuilder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Set the selected course in the input field
+                        courseinput.setText(courseArray[i]);
+                        Toast.makeText(RegisterActivity.this, courseArray[i] + " selected", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                courseBuilder.setNegativeButton("Cancel", (dialogInterface, i) -> {
+                    // Dismiss dialog
+                    dialogInterface.dismiss();
+                });
+
+                // Show dialog
+                courseBuilder.show();
             }
         });
 
