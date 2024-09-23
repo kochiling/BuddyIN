@@ -50,6 +50,7 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     Button edit_pro_btn;
+    private ValueEventListener valueEventListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,14 +79,19 @@ public class ProfileFragment extends Fragment {
         // Get the current user ID
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
+
         // Reference to "User Info" under the current user
         databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
 
         // Add a ValueEventListener to retrieve and update data
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        valueEventListener = new ValueEventListener() {
             @SuppressLint("StringFormatInvalid")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!isAdded()) {
+                    return; // Fragment is not attached, exit the method
+                }
+
                 if (dataSnapshot.exists()) {
                     // Use the UserModel class to map the data from the database
                     UserModel userProfile = dataSnapshot.getValue(UserModel.class);
@@ -94,13 +100,13 @@ public class ProfileFragment extends Fragment {
                         Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
                         // Load the profile image using Glide
                         if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
-                            Glide.with(getContext())
+                            Glide.with(requireContext())
                                     .load(userProfile.getProfile_image())
                                     .into(profileimage);
+                        }
 
                         // Update the TextView with the retrieved data
                         profilename.setText(userProfile.getUsername());
-                        }
                     } else {
                         Log.d(TAG, "User profile is null");
                     }
@@ -113,8 +119,9 @@ public class ProfileFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
             }
-        });
+        };
 
+        databaseReference.addValueEventListener(valueEventListener);
         edit_pro_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,6 +153,14 @@ public class ProfileFragment extends Fragment {
             }
         }).attach();
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (databaseReference != null && valueEventListener != null) {
+            databaseReference.removeEventListener(valueEventListener); // Remove the listener
+        }
     }
 }
 
