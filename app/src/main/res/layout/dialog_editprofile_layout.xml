@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         app:boxBackgroundColor="@color/pink_box"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="10dp"
         app:boxStrokeColor="@color/purple"
         android:id="@+id/subjectcodeinputlayout">
 

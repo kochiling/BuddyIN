@@ -38,24 +38,25 @@
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailinputlayout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/pink_box"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
+            app:boxBackgroundColor="@color/pink_box"
             app:boxStrokeColor="@color/purple"
             app:errorEnabled="true"
+            app:placeholderText="email@gmail.com"
             app:startIconDrawable="@drawable/baseline_email_24"
-            app:startIconTint="@color/purple"
-            android:id="@+id/emailinputlayout">
+            app:startIconTint="@color/purple">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailinput"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:hint="email@gmail.com"
+                android:hint="Email Address"
                 android:textColor="@color/black"
                 tools:ignore="HardcodedText,TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,13 +84,14 @@
             app:errorEnabled="true"
             app:startIconDrawable="@drawable/baseline_lock_24"
             app:startIconTint="@color/purple"
+            app:counterEnabled="true"
             android:id="@+id/passwordinputlayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordinput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="password"
+                android:hint="Password"
                 android:textColor="@color/black"
                 android:textColorHint="#AB47BC"
                 tools:ignore="HardcodedText,TextContrastCheck" />
@@ -126,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:hint="confirm password"
+                android:hint="Confirm password"
                 android:inputType="textPassword"
                 android:textColorHint="#AB47BC"
                 tools:ignore="HardcodedText,TextContrastCheck" />

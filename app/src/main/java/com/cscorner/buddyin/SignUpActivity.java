@@ -2,6 +2,8 @@ package com.cscorner.buddyin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -51,22 +55,71 @@ public class SignUpActivity extends AppCompatActivity {
         passwordinputlayout = findViewById(R.id.passwordinputlayout);
         confirminputlayout = findViewById(R.id.confirminputlayout);
 
-        //backToLoginbtn = findViewById(R.id.backToLoginbtn);
-//        backToLoginbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-
         singupbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createAccount();
             }
         });
+
+        passwordinput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String password = s.toString();
+
+                // Initialize the error message
+                StringBuilder errorMessage = new StringBuilder("Password should contain:");
+
+                // Check password length
+                if (password.length() < 6) {
+                    errorMessage.append("\n- At least 6 characters");
+                }
+
+                // Check for lowercase letters
+                boolean hasLowerCase = !password.equals(password.toUpperCase());
+                if (!hasLowerCase) {
+                    errorMessage.append("\n- At least one lowercase letter");
+                }
+
+                // Check for uppercase letters
+                boolean hasUpperCase = !password.equals(password.toLowerCase());
+                if (!hasUpperCase) {
+                    errorMessage.append("\n- At least one uppercase letter");
+                }
+
+                // Check for numbers
+                boolean hasNumber = password.matches(".*\\d.*");
+                if (!hasNumber) {
+                    errorMessage.append("\n- At least one number");
+                }
+
+                // Check for special characters
+                boolean hasSpecialChar = password.matches(".*[^a-zA-Z0-9].*");
+                if (!hasSpecialChar) {
+                    errorMessage.append("\n- At least one special character");
+                }
+
+                // Set error message based on criteria
+                if (password.length() >= 6 && hasLowerCase && hasUpperCase && hasNumber && hasSpecialChar) {
+                    passwordinputlayout.setHelperText("");
+                    passwordinputlayout.setError(null);  // Clear error if all criteria are met
+                } else {
+                    passwordinputlayout.setError(errorMessage.toString());
+                    passwordinputlayout.setHelperText(null);  // Clear helper text
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Not needed
+            }
+        });
+
     }
 
     private boolean validateEmail(String email) {
@@ -85,7 +138,6 @@ public class SignUpActivity extends AppCompatActivity {
             return true;
         }
     }
-
 
 
     private boolean validatePassword(String password) {
