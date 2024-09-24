@@ -186,8 +186,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 profile_name1.setHint("Enter a new Name");
                 builder.setView(view);
 
-                // Set Positive Button for "Add"
-                builder.setPositiveButton("Add", (dialog, which) -> {
+                // Set Positive Button for "Change"
+                builder.setPositiveButton("Change", (dialog, which) -> {
                     String newProfileName = profile_name1.getText().toString().trim();
 
                     if (!newProfileName.isEmpty()) {
@@ -232,7 +232,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 builder.setView(view);
 
                 // Set Positive Button for "Add"
-                builder.setPositiveButton("Add", (dialog, which) -> {
+                builder.setPositiveButton("Change", (dialog, which) -> {
                     String year1 = year.getText().toString().trim();
 
                     if (!year1.isEmpty()) {
@@ -269,7 +269,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 builder.setView(view);
 
                 // Set Positive Button for "Add"
-                builder.setPositiveButton("Add", (dialog, which) -> {
+                builder.setPositiveButton("Change", (dialog, which) -> {
                     String hobbies1 = hobbies_input.getText().toString().trim();
 
                     if (!hobbies1.isEmpty()) {
@@ -387,7 +387,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 builder.setView(view);
 
                 // Set Positive Button for "Add"
-                builder.setPositiveButton("Add", (dialog, which) -> {
+                builder.setPositiveButton("Change", (dialog, which) -> {
                     String personalites_input1 = personalites_input.getText().toString().trim();
 
                     if (!personalites_input1.isEmpty()) {

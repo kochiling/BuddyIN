@@ -15,11 +15,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cscorner.buddyin.EditProfileActivity;
 import com.cscorner.buddyin.LecturerModel;
 import com.cscorner.buddyin.MainActivity;
 import com.cscorner.buddyin.ProfileViewPagerAdapter;
@@ -44,6 +46,8 @@ public class LecturerProfileFragment extends Fragment {
     ImageView profileimage;
     TextView profilename;
     FirebaseAuth mAuth;
+    Button edit_pro_btn;
+
     private DatabaseReference databaseReference;
 
     public LecturerProfileFragment() {
@@ -60,6 +64,7 @@ public class LecturerProfileFragment extends Fragment {
         profileimage = view.findViewById(R.id.profileImage);
         profilename = view.findViewById(R.id.profile_name);
         mAuth = FirebaseAuth.getInstance();
+        edit_pro_btn = view.findViewById(R.id.edit_pro_btn);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +118,16 @@ public class LecturerProfileFragment extends Fragment {
                 Log.e(TAG, "Error: " + databaseError.getMessage());
             }
         });
+
+        edit_pro_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LecturerEditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         return view;
     }
 

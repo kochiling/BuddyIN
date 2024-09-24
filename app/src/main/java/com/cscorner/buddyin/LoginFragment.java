@@ -1,6 +1,7 @@
 package com.cscorner.buddyin;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,15 +11,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -175,7 +181,83 @@ public class LoginFragment extends Fragment {
 
         });
 
+        forgetPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showResetPasswordDialog();
+            }
+        });
+
     }
+
+    private void showResetPasswordDialog() {
+        // Inflate the layout for the dialog
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_editprofile_layout, null);
+
+        // Build the AlertDialog
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        builder.setTitle("Please enter the email you used to register this account");
+
+        // Get reference to the EditText from the dialog
+        final EditText email_input1 = view.findViewById(R.id.input);
+        email_input1.setHint("email@gmail.com");
+        email_input1.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        builder.setView(view);
+
+
+        builder.setPositiveButton("Reset", (dialog, which) -> {
+            String email_p = email_input1.getText().toString().trim();
+
+            if (!email_p.isEmpty()) {
+                // Call the method to update the profile name in Firebase
+                beginRecovery(email_p);
+            } else {
+                Toast.makeText(getContext(), "Please enter the email you used to register this account", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        // Create and show the dialog
+        android.app.AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void beginRecovery(String email_p) {
+        ProgressDialog loadingBar;
+        loadingBar=new ProgressDialog(getActivity());
+        loadingBar.setMessage("Sending Email....");
+        loadingBar.setCanceledOnTouchOutside(false);
+        loadingBar.show();
+
+        // calling sendPasswordResetEmail
+        // open your email and write the new
+        // password and then you can login
+        mAuth.sendPasswordResetEmail(email_p).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                loadingBar.dismiss();
+                if(task.isSuccessful())
+                {
+                    // if isSuccessful then done message will be shown
+                    // and you can change the password
+                    Toast.makeText(getContext(),"Done sent",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getContext(),"Error Occurred",Toast.LENGTH_LONG).show();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                loadingBar.dismiss();
+                Toast.makeText(getContext(),"Error Failed",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private void handleLecturerLogin(Integer status) {
         if (status == null) {

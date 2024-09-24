@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
@@ -109,7 +111,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         assert data != null;
                         uri = data.getData();
@@ -125,7 +127,66 @@ public class LecturerSignUpActivity extends AppCompatActivity {
             photoPicker.setType("image/*");
             activityResultLauncher.launch(photoPicker);
         });
+
+        passwordinput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String password = s.toString();
+
+                // Initialize the error message
+                StringBuilder errorMessage = new StringBuilder("Password should contain:");
+
+                // Check password length
+                if (password.length() < 6) {
+                    errorMessage.append("\n- At least 6 characters");
+                }
+
+                // Check for lowercase letters
+                boolean hasLowerCase = !password.equals(password.toUpperCase());
+                if (!hasLowerCase) {
+                    errorMessage.append("\n- At least one lowercase letter");
+                }
+
+                // Check for uppercase letters
+                boolean hasUpperCase = !password.equals(password.toLowerCase());
+                if (!hasUpperCase) {
+                    errorMessage.append("\n- At least one uppercase letter");
+                }
+
+                // Check for numbers
+                boolean hasNumber = password.matches(".*\\d.*");
+                if (!hasNumber) {
+                    errorMessage.append("\n- At least one number");
+                }
+
+                // Check for special characters
+                boolean hasSpecialChar = password.matches(".*[^a-zA-Z0-9].*");
+                if (!hasSpecialChar) {
+                    errorMessage.append("\n- At least one special character");
+                }
+
+                // Set error message based on criteria
+                if (password.length() >= 6 && hasLowerCase && hasUpperCase && hasNumber && hasSpecialChar) {
+                    passwordinputlayout.setHelperText("");
+                    passwordinputlayout.setError(null);  // Clear error if all criteria are met
+                } else {
+                    passwordinputlayout.setError(errorMessage.toString());
+                    passwordinputlayout.setHelperText(null);  // Clear helper text
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Not needed
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -152,8 +213,9 @@ public class LecturerSignUpActivity extends AppCompatActivity {
     }
 
     private void saveData() {
-        // Get input values
         progressBar.setVisibility(View.VISIBLE);
+        registerbtn.setEnabled(false);
+        // Get input values
         String email = emailinput.getText().toString().trim();
         String password = passwordinput.getText().toString().trim();
         String confirmPassword = confirminput.getText().toString().trim();
@@ -164,6 +226,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
         // Validate all inputs
         if (!validateName(name) | !validateFaculty(faculty) | !validateID(l_id) | !validateEmail(email) | !validatePassword(password) | !validatePasswordConfirmation(password, confirmPassword)) {
             progressBar.setVisibility(View.GONE);
+            registerbtn.setEnabled(true);
             return;
         }
 
@@ -183,6 +246,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
                     } else {
                         // Registration failed
                         progressBar.setVisibility(View.GONE);
+                        registerbtn.setEnabled(true);
                         Toast.makeText(LecturerSignUpActivity.this, "Failed to register: " + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -203,6 +267,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     progressBar.setVisibility(View.GONE);
+                    registerbtn.setEnabled(true);
                     Toast.makeText(LecturerSignUpActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -238,6 +303,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
     }
 
     private void showRegistrationSuccessDialog() {
+        progressBar.setVisibility(View.GONE);
         // Build an AlertDialog
         new AlertDialog.Builder(this)
                 .setTitle("Registration Successful")
