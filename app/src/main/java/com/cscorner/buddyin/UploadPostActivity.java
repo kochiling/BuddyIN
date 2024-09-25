@@ -132,6 +132,7 @@ public class UploadPostActivity extends AppCompatActivity {
                 saveData();
             }
         });
+
         //For image upload
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

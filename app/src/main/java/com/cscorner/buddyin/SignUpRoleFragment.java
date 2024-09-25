@@ -35,8 +35,8 @@ public class SignUpRoleFragment extends Fragment {
         studentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SignUpActivity.class);
-//                Intent intent = new Intent(getActivity(), RegisterActivity.class);
+                //Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                Intent intent = new Intent(getActivity(), StudentSignUpActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }
