@@ -76,6 +76,10 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.8.8")
 
     implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+    implementation ("com.hbb20:ccp:2.5.4")
 
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
+    implementation("com.google.guava:guava:31.0.1-android")
+    implementation("org.reactivestreams:reactive-streams:1.0.4")
 
 }

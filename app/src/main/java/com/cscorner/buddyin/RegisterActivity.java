@@ -40,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,9 @@ import java.util.Objects;
 public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText nameinput,ageinput,seniorinput,hobbiesinput,personalitiesinput;
-    AutoCompleteTextView genderinput,courseinput,nationalityinput;
+    AutoCompleteTextView genderinput,courseinput;
+    AutoCompleteTextView nationalityinput;
+
     CheckBox checkBox;
     Button registerbtn;
     ImageView upload_pics;
@@ -83,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
         seniorinput = findViewById(R.id.seniorinput);
         genderinput = findViewById(R.id.genderinput);
         courseinput = findViewById(R.id.courseinput);
-        nationalityinput = findViewById(R.id.nationalityinput);
         hobbiesinput = findViewById(R.id.hobbiesinput);
         personalitiesinput = findViewById(R.id.personalitiesinput);
         registerbtn = findViewById(R.id.registerbtn);
@@ -97,6 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
         genderinputlayout = findViewById(R.id.genderinputlayout);
         courseinputlayout = findViewById(R.id.courseinputlayout);
         nationalinputlayout = findViewById(R.id.nationalinputlayout);
+        //nationalityinput = findViewById(R.id.nationalityinput);
 
         //GenderType
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genderinput, R.layout.drop_down_item);
@@ -143,16 +146,24 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //NationalType
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.nationality, R.layout.drop_down_item);
-        adapter2.setDropDownViewResource(R.layout.drop_down_item);
-        nationalityinput.setAdapter(adapter2);
+//        //NationalType
+//        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.nationality, R.layout.drop_down_item);
+//        adapter2.setDropDownViewResource(R.layout.drop_down_item);
+//        nationalityinput.setAdapter(adapter2);
+//
+//        nationalityinput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Toast.makeText(RegisterActivity.this, nationalityinput.getText().toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-        nationalityinput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(RegisterActivity.this, nationalityinput.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
+        CountryCodePicker nationalityinput = findViewById(R.id.nationalityinput);
+
+        nationalityinput.setOnCountryChangeListener(() -> {
+            // Get the selected country full name
+            String selectedCountry = nationalityinput.getSelectedCountryName();
+            Toast.makeText(this, "Selected Country: " + selectedCountry, Toast.LENGTH_SHORT).show();
         });
 
         //HobbiesType
