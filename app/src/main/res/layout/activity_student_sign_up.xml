@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".StudentSignUpActivity"
+    android:background="@drawable/lr_background">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/purple"
+        android:elevation="0dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="15dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/horizontal_transparent_logo3"
+                tools:ignore="ContentDescription,HardcodedText">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Sign Up An Account"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start"
+                android:text="@string/email"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailinputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:boxStrokeColor="@color/purple"
+                app:errorEnabled="true"
+                app:placeholderText="email@gmail.com"
+                app:startIconDrawable="@drawable/baseline_email_24"
+                app:startIconTint="@color/purple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:hint="Email Address"
+                    android:textColor="@color/black"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
+                android:gravity="start"
+                android:text="@string/password"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/purple"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/baseline_lock_24"
+                app:startIconTint="@color/purple"
+                app:counterEnabled="true"
+                android:id="@+id/passwordinputlayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="Password"
+                    android:textColor="@color/black"
+                    android:textColorHint="#AB47BC"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="start"
+                android:text="@string/confirm_password"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirminputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="5dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:endIconMode="password_toggle"
+                app:endIconDrawable="@drawable/baseline_visibility_24"
+                app:endIconTint="@color/purple"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirminput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="Confirm password"
+                    android:inputType="textPassword"
+                    android:textColorHint="#AB47BC"
+                    tools:ignore="HardcodedText,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/personal_information"
+                android:textSize="25sp"
+                android:textAlignment="center"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/upload_pics"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="25dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/click_here_to_upload_an_image"
+                android:scaleX="1"
+                android:scaleY="1"
+                android:src="@drawable/baseline_image_24"
+                tools:ignore="RedundantDescriptionCheck" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple"
+                android:id="@+id/nameinputlayout"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nameinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:hint="@string/name"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ageinputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:boxStrokeColor="@color/purple"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ageinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:hint="@string/age"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple"
+                android:id="@+id/genderinputlayout"
+                app:errorEnabled="true">
+
+                <AutoCompleteTextView
+                    android:id="@+id/genderinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:hint="@string/gender"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple"
+                android:id="@+id/courseinputlayout"
+                app:errorEnabled="true">
+
+                <AutoCompleteTextView
+                    android:id="@+id/courseinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:minHeight="50dp"
+                    android:layout_marginStart="0dp"
+                    android:hint="@string/course_studied"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/seniorinputlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxBackgroundColor="@color/pink_box"
+                app:boxStrokeColor="@color/purple"
+                app:errorEnabled="true"
+                app:prefixText=" Year "
+                app:prefixTextColor="@color/black"
+                app:expandedHintEnabled="false"
+                app:counterEnabled="true"
+                app:counterMaxLength="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/seniorinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="0dp"
+                    android:inputType="number"
+                    android:hint="@string/seniority_example_year_1"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple"
+                android:id="@+id/hobbiesinputlayout"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/hobbiesinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:hint="@string/hobbies"
+                    android:textColor="@color/black"
+                    android:lines="3"
+                    android:minLines="1"
+                    android:inputType="textMultiLine|none"
+                    tools:ignore="TextContrastCheck"
+                    android:focusable="false"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="15dp"
+                app:boxStrokeColor="@color/purple"
+                android:id="@+id/personalitiesinputlayout"
+                app:errorEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/personalitiesinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:hint="@string/personalities"
+                    android:textColor="@color/black"
+                    tools:ignore="TextContrastCheck"
+                    android:lines="3"
+                    android:minLines="1"
+                    android:inputType="textMultiLine|none"
+                    android:focusable="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/pink_box"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                app:boxStrokeColor="@color/purple"
+                android:id="@+id/nationalinputlayout"
+                app:errorEnabled="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Country of Origin"
+                    android:layout_marginBottom="10dp"/>
+
+                <!-- Country Code Picker with full name display -->
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/nationalityinput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_showFullName="true"
+                    app:ccp_showPhoneCode="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_defaultNameCode="MY"
+                    android:background="@color/pink_box"
+                    app:ccpDialog_backgroundColor="@color/white"
+                    android:minHeight="50dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/terms_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="25dp"
+                android:text="@string/i_agree_to_the_terms_and_conditions"
+                tools:ignore="TextContrastCheck"
+                android:buttonTint="@color/white"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/registerbtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="55dp"
+                android:backgroundTint="@color/red_btn"
+                android:shadowColor="@color/black"
+                android:text="@string/register"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:elevation="20dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
