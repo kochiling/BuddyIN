@@ -36,6 +36,7 @@ public class SignUpRoleFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SignUpActivity.class);
+//                Intent intent = new Intent(getActivity(), RegisterActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

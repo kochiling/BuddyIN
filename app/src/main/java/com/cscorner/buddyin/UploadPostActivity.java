@@ -2,13 +2,17 @@ package com.cscorner.buddyin;
 
 import static android.content.ContentValues.TAG;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +28,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -62,10 +68,17 @@ public class UploadPostActivity extends AppCompatActivity {
     TextInputLayout subjectlayout, desclayout;
     FirebaseAuth mAuth;
     DatabaseReference dbref, databaseReference;
-    String imageURL;
-    Uri uri;
     ImageView profileimage;
     String imageProfile;
+
+    String imageURL;
+    Uri uri;
+    private static final int IMAGEPICK_GALLERY_REQUEST = 300;
+    private static final int IMAGE_PICKCAMERA_REQUEST = 400;
+    private static final int CAMERA_REQUEST = 100;
+    private static final int STORAGE_REQUEST = 200;
+    String[] cameraPermission;
+    String[] storagePermission;
 
 
     @SuppressLint("MissingInflatedId")
@@ -96,47 +109,6 @@ public class UploadPostActivity extends AppCompatActivity {
         // Get the current user ID
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         checkUserRole(userId);
-
-//        // Reference to "User Info" under the current user
-//        databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
-//
-//        // Add a ValueEventListener to retrieve and update data
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @SuppressLint("StringFormatInvalid")
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Use the UserModel class to map the data from the database
-//                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
-//                    if (userProfile != null) {
-//                        // Debugging log
-//                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
-//                        // Load the profile image using Glide
-//                        if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
-//                            Glide.with(UploadPostActivity.this)
-//                                    .load(userProfile.getProfile_image())
-//                                    .into(profileimage);
-//
-//                            imageProfile = userProfile.getProfile_image();
-//                            Log.d(TAG,imageProfile);
-//
-//                            // Update the TextView with the retrieved data
-//                            profilename.setText(userProfile.getUsername());
-//                        }
-//                    } else {
-//                        Log.d(TAG, "User profile is null");
-//                    }
-//                } else {
-//                    Log.d(TAG, "Data snapshot does not exist");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Log.e(TAG, "Error: " + databaseError.getMessage());
-//            }
-//        });
-
 
         subjectList = new ArrayList<>();
         adapter = new ArrayAdapter<String>(UploadPostActivity.this, android.R.layout.simple_spinner_dropdown_item, subjectList);
@@ -176,11 +148,115 @@ public class UploadPostActivity extends AppCompatActivity {
         );
 
         uploadPostPic.setOnClickListener(view -> {
-            Intent photoPicker = new Intent(Intent.ACTION_PICK);
-            photoPicker.setType("image/*");
-            activityResultLauncher.launch(photoPicker);
+            showImagePicDialog();
         });
     }
+
+    private void showImagePicDialog() {
+        String[] options = {"Camera", "Gallery"};
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(UploadPostActivity.this);
+        builder.setTitle("Pick Image From");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (which == 0) {
+                    if (!checkCameraPermission()) { // if permission is not given
+                        requestCameraPermission(); // request for permission
+                    } else {
+                        pickFromCamera(); // if already access granted then click
+                    }
+                } else if (which == 1) {
+                    if (!checkStoragePermission()) { // if permission is not given
+                        requestStoragePermission(); // request for permission
+                    } else {
+                        pickFromGallery(); // if already access granted then pick
+                    }
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // request for permission if not given
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean camera_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageaccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if (camera_accepted && writeStorageaccepted) {
+                        pickFromCamera(); // if access granted then click
+                    } else {
+                        Toast.makeText(this, "Please Enable Camera and Storage Permissions", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            break;
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean writeStorageaccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (writeStorageaccepted) {
+                        pickFromGallery(); // if access granted then pick
+                    } else {
+                        Toast.makeText(this, "Please Enable Storage Permissions", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGEPICK_GALLERY_REQUEST) {
+                uri = Objects.requireNonNull(data).getData();
+                uploadPostPic.setImageURI(uri);
+            }
+            if (requestCode == IMAGE_PICKCAMERA_REQUEST) {
+                uploadPostPic.setImageURI(uri);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private Boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
+    }
+
+    private void requestCameraPermission() {
+        requestPermissions(cameraPermission, CAMERA_REQUEST);
+    }
+
+    private void pickFromCamera() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.TITLE, "Temp_pic");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp Description");
+        uri = this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        Intent camerIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        camerIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(camerIntent, IMAGE_PICKCAMERA_REQUEST);
+    }
+
+    private void pickFromGallery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, IMAGEPICK_GALLERY_REQUEST);
+    }
+
+    private Boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(UploadPostActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result;
+    }
+
+    private void requestStoragePermission() {
+        requestPermissions(storagePermission, STORAGE_REQUEST);
+    }
+
 
     public void saveData(){
         if (validateSubject() & validateDesc() ) {
@@ -469,3 +545,43 @@ public class UploadPostActivity extends AppCompatActivity {
         });
     }
 }
+
+//        // Reference to "User Info" under the current user
+//        databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(userId);
+//
+//        // Add a ValueEventListener to retrieve and update data
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("StringFormatInvalid")
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Use the UserModel class to map the data from the database
+//                    UserModel userProfile = dataSnapshot.getValue(UserModel.class);
+//                    if (userProfile != null) {
+//                        // Debugging log
+//                        Log.d(TAG, "User profile retrieved: " + userProfile.getUsername());
+//                        // Load the profile image using Glide
+//                        if (userProfile.getProfile_image() != null && !userProfile.getProfile_image().isEmpty()) {
+//                            Glide.with(UploadPostActivity.this)
+//                                    .load(userProfile.getProfile_image())
+//                                    .into(profileimage);
+//
+//                            imageProfile = userProfile.getProfile_image();
+//                            Log.d(TAG,imageProfile);
+//
+//                            // Update the TextView with the retrieved data
+//                            profilename.setText(userProfile.getUsername());
+//                        }
+//                    } else {
+//                        Log.d(TAG, "User profile is null");
+//                    }
+//                } else {
+//                    Log.d(TAG, "Data snapshot does not exist");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Log.e(TAG, "Error: " + databaseError.getMessage());
+//            }
+//        });

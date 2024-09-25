@@ -25,7 +25,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="10dp">
 
             <ImageView
                 android:id="@+id/logo"
@@ -215,7 +216,7 @@
                 app:boxBackgroundColor="@color/pink_box"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="15dp"
                 app:boxStrokeColor="@color/purple"
                 android:id="@+id/personalitiesinputlayout"
                 app:errorEnabled="true">
@@ -236,7 +237,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/pink_box"
@@ -247,14 +248,23 @@
                 android:id="@+id/nationalinputlayout"
                 app:errorEnabled="true">
 
-                <AutoCompleteTextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Country of Origin"
+                    android:layout_marginBottom="10dp"/>
+
+                <!-- Country Code Picker with full name display -->
+                <com.hbb20.CountryCodePicker
                     android:id="@+id/nationalityinput"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="0dp"
-                    android:hint="Country of residence"
-                    android:textColor="@color/black"
-                    tools:ignore="TextContrastCheck" />
+                    android:layout_height="wrap_content"
+                    app:ccp_showFullName="true"
+                    app:ccp_showPhoneCode="false"
+                    app:ccp_showNameCode="false"
+                    app:ccp_defaultNameCode="MY"
+                    app:ccpDialog_backgroundColor="@color/white"
+                    android:minHeight="50dp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
