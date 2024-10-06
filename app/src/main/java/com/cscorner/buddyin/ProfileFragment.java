@@ -1,9 +1,11 @@
 package com.cscorner.buddyin;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -63,21 +65,28 @@ public class ProfileFragment extends Fragment {
         profilename = view.findViewById(R.id.profile_name);
         mAuth = FirebaseAuth.getInstance();
         edit_pro_btn = view.findViewById(R.id.edit_pro_btn);
+        // Get the current user ID
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut(); // Sign out the user
+                // Sign out the user from FirebaseAuth
+                FirebaseAuth.getInstance().signOut();
 
-                // Redirect to a login activity
+                // Redirect to the login activity
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+
+                // Finish the current activity to prevent returning to it
                 getActivity().finish();
+
+                Log.e(TAG,"logout account"+ userId);
             }
         });
 
-        // Get the current user ID
-        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
 
 
         // Reference to "User Info" under the current user

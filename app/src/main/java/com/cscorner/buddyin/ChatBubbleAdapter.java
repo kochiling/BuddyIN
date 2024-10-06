@@ -93,6 +93,13 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             SendViewHolder sendViewHolder = (SendViewHolder) holder;
             sendViewHolder.user_time.setText(timeStamp);
 
+            // Check if the message is read
+            if (item.isReaded()) {
+                sendViewHolder.isSeen.setText("Seen");
+            } else {
+                sendViewHolder.isSeen.setText("Sent");
+            }
+
             if ("text".equals(type)) {
                 sendViewHolder.user_text.setVisibility(View.VISIBLE);
                 sendViewHolder.images.setVisibility(View.GONE);
@@ -102,15 +109,36 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 sendViewHolder.images.setVisibility(View.VISIBLE);
                 Glide.with(context).load(message).into(sendViewHolder.images);
 
-                ((SendViewHolder) holder).images.setOnClickListener(new View.OnClickListener() {
+                sendViewHolder.images.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, ViewChatImageActivity.class);
-                        intent.putExtra("imageUrl",item.getMessage() );
+                        intent.putExtra("imageUrl", item.getMessage());
                         context.startActivity(intent);
                     }
                 });
             }
+//            SendViewHolder sendViewHolder = (SendViewHolder) holder;
+//            sendViewHolder.user_time.setText(timeStamp);
+//
+//            if ("text".equals(type)) {
+//                sendViewHolder.user_text.setVisibility(View.VISIBLE);
+//                sendViewHolder.images.setVisibility(View.GONE);
+//                sendViewHolder.user_text.setText(message);
+//            } else {
+//                sendViewHolder.user_text.setVisibility(View.GONE);
+//                sendViewHolder.images.setVisibility(View.VISIBLE);
+//                Glide.with(context).load(message).into(sendViewHolder.images);
+//
+//                ((SendViewHolder) holder).images.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(context, ViewChatImageActivity.class);
+//                        intent.putExtra("imageUrl",item.getMessage() );
+//                        context.startActivity(intent);
+//                    }
+//                });
+//            }
         }
     }
 
@@ -134,6 +162,7 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView user_text, user_time;
         ImageView images;
         CardView user_card;
+        TextView isSeen;
 
         public SendViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -141,6 +170,7 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             user_text = itemView.findViewById(R.id.user_text);
             user_time = itemView.findViewById(R.id.user_time);
             images = itemView.findViewById(R.id.images);
+            isSeen = itemView.findViewById(R.id.isSeen);
         }
     }
 

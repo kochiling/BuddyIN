@@ -104,7 +104,10 @@ public class SearchBuddyActivity extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         KNNDataInfoModel knnData = dataSnapshot.getValue(KNNDataInfoModel.class);
 
-                        if (knnData != null && (knnData.getName().toLowerCase().contains(query.toLowerCase()))) {
+                        if (knnData != null && (knnData.getName().toLowerCase().contains(query.toLowerCase())||
+                                knnData.getCourse().toLowerCase().contains(query.toLowerCase())||
+                                knnData.getHobbies().toLowerCase().contains(query.toLowerCase())||
+                                knnData.getPersonalities().toLowerCase().contains(query.toLowerCase()))) {
                             searchList.add(knnData);
                         }
                     }

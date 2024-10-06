@@ -8,6 +8,8 @@
     tools:context=".SearchBuddyActivity">
 
     <androidx.appcompat.widget.Toolbar
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        android:theme="@style/MyThemeOverlay_Toolbar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"

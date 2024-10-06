@@ -86,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
     ChatBubbleAdapter chatadapter;
 
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,7 @@ public class ChatActivity extends AppCompatActivity {
         chatbot_rv.setAdapter(chatadapter);
 
         currentuid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        Log.d("ChatActivity","current uid for chat"+currentuid);
 
         String senderRoom = currentuid + key;
         Log.d("ChatActivity","Send DB"+ senderRoom);
@@ -278,7 +280,71 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void readMessages() {
+        String senderRoom = currentuid + key;
+        String receiverRoom = key + currentuid; // Create the receiverRoom reference
 
+        // Reference to the sender's messages
+        DatabaseReference senderReference = FirebaseDatabase.getInstance().getReference("Buddies")
+                .child("Chats").child(senderRoom).child("Messages");
+
+        // Listen for changes in messages from the sender's room
+        senderReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot msgSnapshot : snapshot.getChildren()) {
+                    ChatModel chatModel = msgSnapshot.getValue(ChatModel.class);
+
+                    // Check if the current user is the sender
+                    if (chatModel != null && chatModel.getSender().equals(currentuid)) {
+                        // Do not mark as read for the sender
+                        continue; // Skip to the next message
+                    }
+
+                    // Check if the message is unread and if the receiver is current user
+                    if (chatModel != null && !chatModel.isReaded() && chatModel.getReceiver().equals(currentuid)) {
+                        // Update the message to set it as read in the receiver's room
+                        msgSnapshot.getRef().child("readed").setValue(true);
+                        Log.e("ChatActivity","readed by sender room "+ chatModel.getReceiver()+ " sender "+ chatModel.getSender());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Error reading sender messages: " + error.getMessage());
+            }
+        });
+
+        // Reference to the receiver's messages
+        DatabaseReference receiverReference = FirebaseDatabase.getInstance().getReference("Buddies").child("Chats").child(receiverRoom).child("Messages");
+
+        // Listen for changes in messages from the receiver's room
+        receiverReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot msgSnapshot : snapshot.getChildren()) {
+                    ChatModel chatModel = msgSnapshot.getValue(ChatModel.class);
+
+                    // Check if the current user is the sender
+                    if (chatModel != null && chatModel.getSender().equals(currentuid)) {
+                        // Do not mark as read for the sender
+                        continue; // Skip to the next message
+                    }
+
+                    // Check if the message is unread and if the receiver is current user
+                    if (chatModel != null && !chatModel.isReaded() && chatModel.getReceiver().equals(currentuid)) {
+                        // Update the message to set it as read in the receiver's room
+                        msgSnapshot.getRef().child("readed").setValue(true);
+                        Log.e("ChatActivity","readed by receiber room "+ chatModel.getReceiver()+ " sender "+ chatModel.getSender());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Error reading receiver messages: " + error.getMessage());
+            }
+        });
     }
 
     private void showImagePicDialog() {

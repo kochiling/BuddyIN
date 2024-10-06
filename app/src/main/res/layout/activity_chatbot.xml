@@ -5,8 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatbotActivity"
-    android:background="@color/white">
+    tools:context=".ChatbotActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint"
@@ -47,13 +46,24 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="start"
-            android:text="🤖 BuddyIN Chatbot "
+            android:text="🤖 BuddyIN AI Buddy "
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/chatbot_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profileImage"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/no_data_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Hello and Welcome to BuddyIN AI Buddy.\n You can type your question in the text box and send it to our AI Buddy. \n Feel free to ask any question you want. \n "
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chatbot_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chatbot_rv"
@@ -63,6 +73,8 @@
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
             app:layout_constraintTop_toBottomOf="@id/chatbot_toolbar"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/row_user" />
 
         <LinearLayout
@@ -76,42 +88,28 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/sendmsg_et"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:maxLines="3"
                 android:background="@color/white"
-                android:hint="Message"
+                android:hint="Enter your question here"
+                android:maxLines="3"
                 android:textColor="@color/black"
                 app:backgroundTint="@null"
                 app:strokeColor="@color/black"
                 app:strokeWidth="2dp" />
 
-            <ImageButton
-                android:id="@+id/attach_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@color/transparent"
-                android:contentDescription="attach"
-                android:scaleX="1.5"
-                android:scaleY="1.5"
-                android:src="@drawable/twotone_list_alt_24"
-                tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton
                 android:id="@+id/send_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/transparent"
                 android:contentDescription="send"
