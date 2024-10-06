@@ -14,6 +14,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -50,6 +56,55 @@ public class BuddyChatAdapter extends RecyclerView.Adapter<BuddyChatViewHolder>{
                 context.startActivity(intent);
             }
         });
+
+        // Get the current user ID and buddy's user ID
+        String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String buddyUserID = userModelList.get(position).getUser_id();
+        String senderRoom = currentUserID + buddyUserID;
+
+        // Reference to the chat in Firebase (adjust the path according to your structure)
+        DatabaseReference lastMessageRef = FirebaseDatabase.getInstance().getReference("Buddies")
+                .child("Chats").child(senderRoom).child("Messages")
+                .orderByKey()
+                .limitToLast(1).getRef();  // Fetch the last message
+
+        // Fetch the last message
+        lastMessageRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot messageSnapshot : snapshot.getChildren()) {
+                        String messageType = messageSnapshot.child("type").getValue(String.class);
+                        String messageText = messageSnapshot.child("message").getValue(String.class);
+                        String senderID = messageSnapshot.child("sender").getValue(String.class);
+                        String lastMessage;
+
+                        // Check if the last message was an image
+                        if ("image".equals(messageType)) {
+                            lastMessage = "[image]";
+                        } else {
+                            lastMessage = messageText;
+                        }
+
+                        // If the sender is the current user, prepend "You: " to the message
+                        if (senderID != null && senderID.equals(currentUserID)) {
+                            holder.lastseen.setText("You: " + lastMessage);
+                        } else {
+                            holder.lastseen.setText(lastMessage);
+                        }
+                    }
+                } else {
+                    holder.lastseen.setText("No messages yet");  // Default text if no messages exist
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                holder.lastseen.setText("Error loading last message");
+            }
+        });
+
+
 
 
     }

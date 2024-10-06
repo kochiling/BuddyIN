@@ -66,6 +66,7 @@ public class BuddyChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ChatbotActivity.class);
+                //Intent intent = new Intent(getContext(), GeminiChatbotActivity.class);
                 startActivity(intent);
             }
         });

@@ -12,12 +12,12 @@
 
         <androidx.appcompat.widget.Toolbar
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:theme="@style/MyThemeOverlay_Toolbar"
             android:id="@+id/buddy_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/purple"
             android:elevation="0dp"
-            android:theme="@style/CustomToolbarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,11 +27,11 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:contentDescription="@string/search"
-            android:src="@drawable/baseline_search_24"
+            android:src="@drawable/baseline_search_242"
             android:layout_marginTop="5dp"
             android:background="@color/transparent"
             app:layout_constraintEnd_toEndOf="@+id/buddy_toolbar"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/buddytab"

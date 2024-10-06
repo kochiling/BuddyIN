@@ -33,9 +33,6 @@
             android:name=".StudentSignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".GeminiChatbotActivity"
-            android:exported="false" />
-        <activity
             android:name=".lecturer.LecturerEditProfileActivity"
             android:exported="false" />
         <activity
