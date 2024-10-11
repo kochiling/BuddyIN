@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -98,6 +100,12 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         comment_text = findViewById(R.id.comment);
         subject = findViewById(R.id.subject);
 
+        Toolbar toolbar = findViewById(R.id.uploadP_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("");
+        // Enable the Up button (back button)
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
         //Get buddy id
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -113,16 +121,11 @@ public class ViewPostDetailActivity extends AppCompatActivity {
 
         checkUserRole(currentUid);
 
-//        imageUrl = bundle.getString("Image");
-//        Glide.with(this).load(bundle.getString("Image")).into(detailImage);
-
         profile_name.setText(username);
         context.setText(desc);
         String timestamp1 = formatTimestamp(timestamp);
         time.setText(timestamp1);
         Glide.with(context).load(user_profile).into(profileImage);
-
-//        subject.setText("Subject Code: " + subject_code);
 
         if ("General Question".equals(subject_code)) {
             subject.setText(subject_code);
@@ -409,5 +412,12 @@ public class ViewPostDetailActivity extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

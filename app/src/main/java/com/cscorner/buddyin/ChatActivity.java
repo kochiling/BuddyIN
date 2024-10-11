@@ -86,7 +86,6 @@ public class ChatActivity extends AppCompatActivity {
     ChatBubbleAdapter chatadapter;
 
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -274,6 +273,26 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showImagePicDialog();
+            }
+        });
+
+        profile_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewBuddyProfileActivity.class);
+                intent.putExtra("key", key);
+                intent.putExtra("userID", userID);
+                startActivity(intent);
+            }
+        });
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewBuddyProfileActivity.class);
+                intent.putExtra("key", key);
+                intent.putExtra("userID", userID);
+                startActivity(intent);
             }
         });
 

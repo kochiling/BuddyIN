@@ -54,7 +54,7 @@ import kotlinx.coroutines.Dispatchers;
 
 public class ChatbotActivity extends AppCompatActivity {
 
-    ImageView profileImage;
+
     TextView profile_name, no_data_text;
     EditText sendmsg_et;
     ImageButton send_btn;
@@ -85,7 +85,6 @@ public class ChatbotActivity extends AppCompatActivity {
         //Adjust the keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        profileImage = findViewById(R.id.profileImage);
         profile_name = findViewById(R.id.profile_name);
         sendmsg_et = findViewById(R.id.sendmsg_et);
         send_btn = findViewById(R.id.send_btn);

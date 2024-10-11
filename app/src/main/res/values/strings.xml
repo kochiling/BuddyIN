@@ -55,5 +55,6 @@
     <string name="upload">Upload</string>
     <string name="search">Search</string>
     <string name="no_results">No Results</string>
+    <string name="buddy_request">Buddy Request</string>
 
 </resources>

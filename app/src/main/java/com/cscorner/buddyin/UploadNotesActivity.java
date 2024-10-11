@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +27,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -93,6 +95,12 @@ public class UploadNotesActivity extends AppCompatActivity {
         desclayout = findViewById(R.id.input_desclayout);
         input_title = findViewById(R.id.input_title);
         titlelayout = findViewById(R.id.input_titlelayout);
+
+        Toolbar toolbar = findViewById(R.id.uploadN_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Upload Notes");
+        // Enable the Up button (back button)
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         storageReference = FirebaseStorage.getInstance().getReference("Notes File");
 
@@ -402,5 +410,13 @@ public class UploadNotesActivity extends AppCompatActivity {
                 Toast.makeText(UploadNotesActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

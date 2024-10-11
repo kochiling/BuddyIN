@@ -130,6 +130,23 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
+            postViewHolder.commentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ViewPostDetailActivity.class);
+                    intent.putExtra("userID",postModelList.get(holder.getAdapterPosition()).getUser_id());
+                    intent.putExtra("username",postModelList.get(holder.getAdapterPosition()).getUsername());
+                    intent.putExtra("postImage",postModelList.get(holder.getAdapterPosition()).getPost_image());
+                    intent.putExtra("desc",postModelList.get(holder.getAdapterPosition()).getDescription());
+                    intent.putExtra("timestamp",postModelList.get(holder.getAdapterPosition()).getTimestamp());
+                    intent.putExtra("postid",postModelList.get(holder.getAdapterPosition()).getPost_id());
+                    intent.putExtra("userImage",postModelList.get(holder.getAdapterPosition()).getUser_profile());
+                    intent.putExtra("subject",postModelList.get(holder.getAdapterPosition()).getSubject());
+                    intent.putExtra("key",postModelList.get(holder.getAdapterPosition()).getKey());
+                    context.startActivity(intent);
+                }
+            });
+
 
 
         } else {
@@ -170,6 +187,23 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             questionViewHolder.setCommentNum(item);
 
             questionViewHolder.postCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ViewPostDetailActivity.class);
+                    intent.putExtra("userID",postModelList.get(holder.getAdapterPosition()).getUser_id());
+                    intent.putExtra("username",postModelList.get(holder.getAdapterPosition()).getUsername());
+                    intent.putExtra("postImage",postModelList.get(holder.getAdapterPosition()).getPost_image());
+                    intent.putExtra("desc",postModelList.get(holder.getAdapterPosition()).getDescription());
+                    intent.putExtra("timestamp",postModelList.get(holder.getAdapterPosition()).getTimestamp());
+                    intent.putExtra("postid",postModelList.get(holder.getAdapterPosition()).getPost_id());
+                    intent.putExtra("userImage",postModelList.get(holder.getAdapterPosition()).getUser_profile());
+                    intent.putExtra("subject",postModelList.get(holder.getAdapterPosition()).getSubject());
+                    intent.putExtra("key",postModelList.get(holder.getAdapterPosition()).getKey());
+                    context.startActivity(intent);
+                }
+            });
+
+            questionViewHolder.commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ViewPostDetailActivity.class);

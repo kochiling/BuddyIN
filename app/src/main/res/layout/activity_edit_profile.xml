@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/purple"
         android:elevation="0dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

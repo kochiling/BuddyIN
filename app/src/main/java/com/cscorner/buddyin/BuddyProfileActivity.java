@@ -6,6 +6,7 @@ import static android.widget.Toast.LENGTH_SHORT;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -56,6 +58,12 @@ public class BuddyProfileActivity extends AppCompatActivity {
         seniorityText = findViewById(R.id.semesterText);
         hobbiesText = findViewById(R.id.hobbiesText);
         personalitiesText = findViewById(R.id.personalityText);
+
+        Toolbar toolbar = findViewById(R.id.buddyP_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Buddy's Information");
+        // Enable the Up button (back button)
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -191,5 +199,14 @@ public class BuddyProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
