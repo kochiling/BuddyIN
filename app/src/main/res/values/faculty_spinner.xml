@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="facultyinput">
-        <item>School of Engineering</item>
-        <item>School of Computing</item>
-        <item>School of Business</item>
-        <item>School of Excellent Pre School</item>
-        <item>School of Hospitality</item>
+        <item>School of Computing (SOC)</item>
+        <item>School of Engineering (SOE)</item>
+        <item>School of Business (SOBIZ)</item>
+        <item>Centre of Excellence for Pre-University Studies (CEPS)</item>
+        <item>School of Hospitality and Culinary Arts (SOHOS)</item>
+        <item>Centre for Australian Degree Programs (CADP) </item>
+        <item>Centre for American Education (CAE) </item>
+        <item>Language Centre (LC)</item>
     </string-array>
 </resources>

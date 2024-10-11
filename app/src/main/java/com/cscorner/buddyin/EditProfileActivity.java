@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +33,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -92,6 +94,12 @@ public class EditProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Toolbar toolbar = findViewById(R.id.buddyP_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setSubtitle("Edit Your Personal Information");
+        // Enable the Up button (back button)
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         profileImage = findViewById(R.id.profileImage);
         profile_name = findViewById(R.id.profile_name);
@@ -785,6 +793,15 @@ public class EditProfileActivity extends AppCompatActivity {
                 Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private static class UpdateUserProfileImage {

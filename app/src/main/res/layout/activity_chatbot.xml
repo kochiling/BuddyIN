@@ -24,34 +24,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profileImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="5dp"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/baseline_bot_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"/>
-
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
             android:gravity="start"
             android:text="🤖 BuddyIN AI Buddy "
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/chatbot_rv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profileImage"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -59,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Hello and Welcome to BuddyIN AI Buddy.\n You can type your question in the text box and send it to our AI Buddy. \n Feel free to ask any question you want. \n "
+            android:text="Hello and Welcome to BuddyIN AI Buddy 🤖.\n You can type your question in the text box and send it to our AI Buddy📃❓. \n Feel free to ask any question you want.😊 \n "
             app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +60,7 @@
             android:scrollbars="vertical"
             app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
             app:layout_constraintTop_toBottomOf="@id/chatbot_toolbar"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/row_user" />
 

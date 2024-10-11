@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -46,6 +48,12 @@ public class RequestBuddyProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Toolbar toolbar = findViewById(R.id.buddyP_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Buddy's Information");
+        // Enable the Up button (back button)
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         profileImage = findViewById(R.id.profileImage);
         profile_name = findViewById(R.id.profile_name);
@@ -178,5 +186,14 @@ public class RequestBuddyProfileActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

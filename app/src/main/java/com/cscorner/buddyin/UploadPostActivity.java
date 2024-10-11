@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +31,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -93,6 +95,12 @@ public class UploadPostActivity extends AppCompatActivity {
 
             return insets;
         });
+
+        Toolbar toolbar = findViewById(R.id.uploadP_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Upload Post or Question");
+        // Enable the Up button (back button)
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         // Initialize FirebaseAuth
         mAuth = FirebaseAuth.getInstance();
@@ -544,6 +552,15 @@ public class UploadPostActivity extends AppCompatActivity {
                 Toast.makeText(UploadPostActivity.this, "Database Error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (@NonNull MenuItem item){
+        if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
