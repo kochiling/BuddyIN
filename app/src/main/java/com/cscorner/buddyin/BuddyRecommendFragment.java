@@ -30,15 +30,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-//import okhttp3.Call;
-//import okhttp3.Callback;
-//import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class BuddyRecommendFragment extends Fragment {
 
@@ -47,6 +46,7 @@ public class BuddyRecommendFragment extends Fragment {
      List<UserModel> UserList;
      TextView noDataText;
      private BuddyMatchApi api;
+     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -82,33 +82,12 @@ public class BuddyRecommendFragment extends Fragment {
         // Call the method to make the request
         sendUserIdToServer();
 
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//
-//        String currentuid= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-//
-//        RequestBody formbody = new FormBody.Builder().add("user_id",currentuid).build();
-//
-//        Request request = new Request.Builder().url("http://192.168.0.115:5000/get_buddies").post(formbody).build();
-//        // Inside your OkHttp callback
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                Log.e("API Error", "Request failed: " + e.getMessage());
-//                getActivity().runOnUiThread(() -> {
-//                    Toast.makeText(getActivity(), "Error from API", Toast.LENGTH_SHORT).show();
-//                });
-//            }
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                assert response.body() != null;
-//                String responseBody = response.body().string();
-//                getActivity().runOnUiThread(() -> {
-//                    Log.e("API Error", responseBody);
-//                    Toast.makeText(getActivity(), responseBody, Toast.LENGTH_SHORT).show();
-//                });
-//            }
-//        });
+        // Initialize SwipeRefreshLayout
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh); // Bind SwipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            UserList.clear(); // Clear the current list
+            fetchMatchedBuddies(); // Refresh data
+        });
 
     }
 
@@ -178,6 +157,7 @@ public class BuddyRecommendFragment extends Fragment {
                 if (userModel != null) {
                     userModel.setKey(snapshot.getKey()); // Assuming you have a setKey method to store the key
                     UserList.add(userModel);
+
                 } else {
                     Log.d(TAG, "UserModel is null for buddyId: " + buddyId);
                 }
@@ -185,15 +165,47 @@ public class BuddyRecommendFragment extends Fragment {
                 adapter.setRecommendList(UserList);
                 adapter.notifyDataSetChanged();
                 noDataText.setVisibility(UserList.isEmpty() ? View.VISIBLE : View.GONE);
+                // Stop the refresh animation after data is loaded
+                swipeRefreshLayout.setRefreshing(false);
 
             }
-
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getContext(), "Failed to load buddy info.", Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
 }
+
+//import okhttp3.Call;
+//import okhttp3.Callback;
+//import okhttp3.Response;
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//
+//        String currentuid= Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+//
+//        RequestBody formbody = new FormBody.Builder().add("user_id",currentuid).build();
+//
+//        Request request = new Request.Builder().url("http://192.168.0.115:5000/get_buddies").post(formbody).build();
+//        // Inside your OkHttp callback
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                Log.e("API Error", "Request failed: " + e.getMessage());
+//                getActivity().runOnUiThread(() -> {
+//                    Toast.makeText(getActivity(), "Error from API", Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                assert response.body() != null;
+//                String responseBody = response.body().string();
+//                getActivity().runOnUiThread(() -> {
+//                    Log.e("API Error", responseBody);
+//                    Toast.makeText(getActivity(), responseBody, Toast.LENGTH_SHORT).show();
+//                });
+//            }
+//        });

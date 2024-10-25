@@ -52,7 +52,8 @@ dependencies {
 
     implementation(libs.cardview)
     implementation (libs.smoothbottombar)
-
+    implementation (libs.gridlayout)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.database)

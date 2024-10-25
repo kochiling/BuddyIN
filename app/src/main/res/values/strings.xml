@@ -56,5 +56,7 @@
     <string name="search">Search</string>
     <string name="no_results">No Results</string>
     <string name="buddy_request">Buddy Request</string>
+    <string name="_99">99+</string>
+    <string name="menu_refresh">"Refresh "</string>
 
 </resources>
