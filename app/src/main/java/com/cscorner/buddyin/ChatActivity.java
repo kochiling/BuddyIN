@@ -159,7 +159,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        readMessages();
+        //readMessages();
 
         //Get Buddy Profile image and name
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("User Info").child(key);
@@ -300,7 +300,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private void readMessages() {
         String senderRoom = currentuid + key;
-        String receiverRoom = key + currentuid; // Create the receiverRoom reference
 
         // Reference to the sender's messages
         DatabaseReference senderReference = FirebaseDatabase.getInstance().getReference("Buddies")
@@ -331,37 +330,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e(TAG, "Error reading sender messages: " + error.getMessage());
-            }
-        });
-
-        // Reference to the receiver's messages
-        DatabaseReference receiverReference = FirebaseDatabase.getInstance().getReference("Buddies").child("Chats").child(receiverRoom).child("Messages");
-
-        // Listen for changes in messages from the receiver's room
-        receiverReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot msgSnapshot : snapshot.getChildren()) {
-                    ChatModel chatModel = msgSnapshot.getValue(ChatModel.class);
-
-                    // Check if the current user is the sender
-                    if (chatModel != null && chatModel.getSender().equals(currentuid)) {
-                        // Do not mark as read for the sender
-                        continue; // Skip to the next message
-                    }
-
-                    // Check if the message is unread and if the receiver is current user
-                    if (chatModel != null && !chatModel.isReaded() && chatModel.getReceiver().equals(currentuid)) {
-                        // Update the message to set it as read in the receiver's room
-                        msgSnapshot.getRef().child("readed").setValue(true);
-                        Log.e("ChatActivity","readed by receiber room "+ chatModel.getReceiver()+ " sender "+ chatModel.getSender());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(TAG, "Error reading receiver messages: " + error.getMessage());
             }
         });
     }

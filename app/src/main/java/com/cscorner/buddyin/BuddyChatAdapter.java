@@ -1,7 +1,10 @@
 package com.cscorner.buddyin;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,20 +50,45 @@ public class BuddyChatAdapter extends RecyclerView.Adapter<BuddyChatViewHolder>{
         Glide.with(context).load(userModelList.get(position).getProfile_image()).into(holder.profileImage);
         holder.profile_name.setText(userModelList.get(position).getUsername());
 
-        holder.my_buddyCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("userID",userModelList.get(holder.getAdapterPosition()).getUser_id());
-                intent.putExtra("key",userModelList.get(holder.getAdapterPosition()).getKey());
-                context.startActivity(intent);
-            }
-        });
-
         // Get the current user ID and buddy's user ID
         String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String buddyUserID = userModelList.get(position).getUser_id();
         String senderRoom = currentUserID + buddyUserID;
+
+        // Call the function to count unread messages
+        countUnreadMessages(currentUserID, buddyUserID, holder);
+
+        holder.my_buddyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("userID", userModelList.get(holder.getAdapterPosition()).getUser_id());
+                intent.putExtra("key", userModelList.get(holder.getAdapterPosition()).getKey());
+
+                // Mark messages as read when opening the chat
+                DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("Buddies")
+                        .child("Chats").child(senderRoom).child("Messages");
+
+                messagesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot messageSnapshot : snapshot.getChildren()) {
+                            String receiverID = messageSnapshot.child("receiver").getValue(String.class);
+                            if (receiverID != null && receiverID.equals(currentUserID)) {
+                                messageSnapshot.getRef().child("readed").setValue(true);  // Mark as read
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e(TAG, "Error marking messages as read: " + error.getMessage());
+                    }
+                });
+
+                context.startActivity(intent);
+            }
+        });
 
         // Reference to the chat in Firebase (adjust the path according to your structure)
         DatabaseReference lastMessageRef = FirebaseDatabase.getInstance().getReference("Buddies")
@@ -103,10 +131,42 @@ public class BuddyChatAdapter extends RecyclerView.Adapter<BuddyChatViewHolder>{
                 holder.lastseen.setText("Error loading last message");
             }
         });
+    }
 
+    private void countUnreadMessages(String currentUserID, String buddyUserID, BuddyChatViewHolder holder) {
+        String senderRoom = currentUserID + buddyUserID;
+        DatabaseReference messagesRef = FirebaseDatabase.getInstance().getReference("Buddies")
+                .child("Chats").child(senderRoom).child("Messages");
 
+        // Listen for unread messages where the receiver is the current user
+        messagesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int unreadCount = 0;
+                for (DataSnapshot messageSnapshot : snapshot.getChildren()) {
+                    String receiverID = messageSnapshot.child("receiver").getValue(String.class);
+                    Boolean isRead = messageSnapshot.child("readed").getValue(Boolean.class);
 
+                    // Count if the receiver is the current user and message is unread
+                    if (receiverID != null && receiverID.equals(currentUserID) && Boolean.FALSE.equals(isRead)) {
+                        unreadCount++;
+                    }
+                }
 
+                // Update unread count in the UI
+                if (unreadCount > 0) {
+                    holder.num.setText(String.valueOf(unreadCount));
+                    holder.num.setVisibility(View.VISIBLE);
+                } else {
+                    holder.num.setVisibility(View.GONE);  // Hide the count when no unread messages
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Error fetching unread messages: " + error.getMessage());
+            }
+        });
     }
 
     @Override
@@ -116,7 +176,7 @@ public class BuddyChatAdapter extends RecyclerView.Adapter<BuddyChatViewHolder>{
 }
 
 class BuddyChatViewHolder extends RecyclerView.ViewHolder {
-    TextView profile_name,lastseen;
+    TextView profile_name,lastseen,num;
     CardView my_buddyCard;
     ImageView profileImage;
 
@@ -126,5 +186,6 @@ class BuddyChatViewHolder extends RecyclerView.ViewHolder {
         lastseen = itemView.findViewById(R.id.last_chat);
         my_buddyCard = itemView.findViewById(R.id.mybuddy_card);
         profileImage = itemView.findViewById(R.id.profileImage);
+        num = itemView.findViewById(R.id.num);
     }
 }

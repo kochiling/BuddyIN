@@ -39,7 +39,7 @@ public class BuddyChatFragment extends Fragment {
     BuddyChatAdapter adapter;
     DatabaseReference usersRef;
     List<UserModel> UserList;
-    TextView noDataText;
+    TextView noDataText,num;
     ImageButton chatbot;
 
     @Nullable
@@ -61,6 +61,7 @@ public class BuddyChatFragment extends Fragment {
         noDataText = view.findViewById(R.id.no_data_text);
         noDataText.setVisibility(View.VISIBLE );
         chatbot = view.findViewById(R.id.chatbot);
+
 
         chatbot.setOnClickListener(new View.OnClickListener() {
             @Override

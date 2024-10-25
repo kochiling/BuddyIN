@@ -9,6 +9,7 @@ firebaseStorage = "21.0.0"
 glide = "4.12.0"
 googleServices = "4.4.2"
 gradle = "8.5.2"
+gridlayout = "1.0.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -22,6 +23,7 @@ navigationFragmentKtx = "2.7.7"
 navigationUiKtx = "2.7.7"
 smoothbottombar = "1.7.9"
 annotationJvm = "1.8.2"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 android-pdf-viewer = { module = "com.github.barteksc:android-pdf-viewer", version.ref = "androidPdfViewer" }
@@ -34,6 +36,7 @@ firebase-storage = { module = "com.google.firebase:firebase-storage", version.re
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "gridlayout" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -46,6 +49,7 @@ navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-kt
 navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
 smoothbottombar = { module = "com.github.ibrahimsn98:SmoothBottomBar", version.ref = "smoothbottombar" }
 annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
+swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
