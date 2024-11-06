@@ -29,6 +29,7 @@
         android:theme="@style/Theme.BuddyIN"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <profileable android:shell="true" />
         <activity
             android:name=".StudentSignUpActivity"
             android:exported="false" />
@@ -67,9 +68,6 @@
             android:exported="false" />
         <activity
             android:name=".ViewChatImageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ViewPDFActivity"
             android:exported="false" />
         <activity
             android:name=".SignUpActivity"
@@ -112,5 +110,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

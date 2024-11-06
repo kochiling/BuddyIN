@@ -397,16 +397,41 @@ public class UploadPostActivity extends AppCompatActivity {
         builder.setView(view);
 
         builder.setPositiveButton("Add", (dialog, which) -> {
-            String newSubject = subjectCode.getText().toString().trim() + " - " + subjectName.getText().toString().trim();
-            if (!newSubject.isEmpty()) {
-                dbref.push().setValue(newSubject).addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(UploadPostActivity.this, "Subject added successfully.", Toast.LENGTH_SHORT).show();
-                        ShowData();
-                    } else {
-                        Toast.makeText(UploadPostActivity.this, "Failed to add subject.", Toast.LENGTH_SHORT).show();
+            String code = subjectCode.getText().toString().trim();
+            String name = subjectName.getText().toString().trim();
+
+            // Check if both fields are filled
+            if (!code.isEmpty() && !name.isEmpty()) {
+                String newSubject = code + " - " + name;
+
+                // Check for duplicates before adding
+                dbref.orderByValue().equalTo(newSubject).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // Duplicate found, show a message
+                            Toast.makeText(UploadPostActivity.this, "Subject already exists.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // No duplicate, add the new subject
+                            dbref.push().setValue(newSubject).addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(UploadPostActivity.this, "Subject added successfully.", Toast.LENGTH_SHORT).show();
+                                    ShowData();
+                                } else {
+                                    Toast.makeText(UploadPostActivity.this, "Failed to add subject.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(UploadPostActivity.this, "Error checking for duplicates.", Toast.LENGTH_SHORT).show();
                     }
                 });
+            } else {
+                // Display error message if any field is empty
+                Toast.makeText(UploadPostActivity.this, "Please enter both Subject Code and Subject Name.", Toast.LENGTH_SHORT).show();
             }
         });
 

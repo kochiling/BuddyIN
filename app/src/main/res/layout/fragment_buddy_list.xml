@@ -9,7 +9,7 @@
         android:id="@+id/no_data_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text ="@string/buddy_request"
+        android:text ="@string/no_buddy_request"
         android:gravity="center"
         android:textSize="30sp"/>
 

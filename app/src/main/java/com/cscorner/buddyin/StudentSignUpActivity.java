@@ -695,7 +695,12 @@ public class StudentSignUpActivity extends AppCompatActivity {
     private boolean validateSenior() {
         String senior = seniorinput.getText().toString().trim();
         if (senior.isEmpty()) {
-            seniorinputlayout.setError("Senior input is required!");
+            seniorinputlayout.setError("Year is required!");
+            return false;
+        } else if (senior.length() > 1) {
+            passwordinputlayout.setError("The input character cannot be more than one character");
+            Toast.makeText(this, "The input character cannot be more than one character", Toast.LENGTH_SHORT).show();
+            passwordinput.requestFocus();
             return false;
         } else {
             seniorinputlayout.setError(null);

@@ -72,13 +72,6 @@ public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHo
                         .child("list")
                         .child(currentUserId);
 
-//                DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("Buddies").child("status")
-//                        .child(requestUserId);
-//
-//                DatabaseReference statusMyRef = FirebaseDatabase.getInstance().getReference("Buddies").child("status")
-//                        .child(currentUserId);
-
-
                 // Update friend request status and add to friend list
                 userReceivedRef.setValue(false).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -87,12 +80,6 @@ public class BuddyRequestAdapter extends RecyclerView.Adapter<BuddyRequestViewHo
                                 // Successfully updated friend requests, now add to friend lists
                                 currentUserFriendListRef.setValue(true); // Store userId with true
                                 requestUserFriendListRef.setValue(true);// Store userId with true
-
-//                                HashMap<Object, String> hashMap = new HashMap<>();
-//                                hashMap.put("onlineStatus", "online");
-//                                hashMap.put("typingTo", "no one");
-//                                statusRef.setValue(hashMap);
-//                                statusMyRef.setValue(hashMap);
 
                                 int positionToRemove = holder.getAdapterPosition();
                                 userModelList.remove(positionToRemove);

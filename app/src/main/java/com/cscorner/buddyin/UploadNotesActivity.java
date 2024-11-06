@@ -299,15 +299,41 @@ public class UploadNotesActivity extends AppCompatActivity {
         builder.setView(view);
 
         builder.setPositiveButton("Add", (dialog, which) -> {
-            String subjectCodeText = subjectCode.getText().toString().trim();
-            String subjectNameText = subjectName.getText().toString().trim();
-            String formattedSubject = subjectCodeText + " - " + subjectNameText;
+            String code = subjectCode.getText().toString().trim();
+            String name = subjectName.getText().toString().trim();
 
-            if (!subjectCodeText.isEmpty() && !subjectNameText.isEmpty()) {
-                DatabaseReference reference = dbref.push();
-                reference.setValue(formattedSubject);
+            // Check if both fields are filled
+            if (!code.isEmpty() && !name.isEmpty()) {
+                String newSubject = code + " - " + name;
+
+                // Check for duplicates before adding
+                dbref.orderByValue().equalTo(newSubject).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            // Duplicate found, show a message
+                            Toast.makeText(UploadNotesActivity.this, "Subject already exists.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // No duplicate, add the new subject
+                            dbref.push().setValue(newSubject).addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(UploadNotesActivity.this, "Subject added successfully.", Toast.LENGTH_SHORT).show();
+                                    ShowData();
+                                } else {
+                                    Toast.makeText(UploadNotesActivity.this, "Failed to add subject.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(UploadNotesActivity.this, "Error checking for duplicates.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             } else {
-                Toast.makeText(UploadNotesActivity.this, "Both fields are required", Toast.LENGTH_SHORT).show();
+                // Display error message if any field is empty
+                Toast.makeText(UploadNotesActivity.this, "Please enter both Subject Code and Subject Name.", Toast.LENGTH_SHORT).show();
             }
         });
 
