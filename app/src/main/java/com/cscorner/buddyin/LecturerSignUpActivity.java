@@ -121,20 +121,6 @@ public class LecturerSignUpActivity extends AppCompatActivity {
             }
         });
 
-//        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                result -> {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//                        Intent data = result.getData();
-//                        assert data != null;
-//                        uri = data.getData();
-//                        upload_pics.setImageURI(uri);
-//                    } else {
-//                        Toast.makeText(LecturerSignUpActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//        );
-
         upload_pics.setOnClickListener(view -> {
 //            Intent photoPicker = new Intent(Intent.ACTION_PICK);
 //            photoPicker.setType("image/*");
@@ -343,7 +329,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
         String l_id = idinput.getText().toString().trim();
 
         // Validate all inputs
-        if (!validateName(name) | !validateFaculty(faculty) | !validateID(l_id) | !validateEmail(email) | !validatePassword(password) | !validatePasswordConfirmation(password, confirmPassword)) {
+        if (!validateName(name) | !validateFaculty(faculty) | !validateID(l_id) | !validateEmail(email) | !validatePassword(password) | !validatePasswordConfirmation(password, confirmPassword)| !validateCheckBox())  {
             progressBar.setVisibility(View.GONE);
             registerbtn.setEnabled(true);
             return;
@@ -471,7 +457,12 @@ public class LecturerSignUpActivity extends AppCompatActivity {
         if (l_id.isEmpty()) {
             idinputlayout.setError("Lecturer ID is required!");
             return false;
-        } else {
+        } else if (l_id.length() > 8) {
+            passwordinputlayout.setError("Lecturer ID cannot exceed 8 characters");
+            Toast.makeText(this, "Lecturer ID cannot exceed 8 characters!", Toast.LENGTH_SHORT).show();
+            passwordinput.requestFocus();
+            return false;
+        }  else {
             idinputlayout.setError(null);
             return true;
         }
@@ -531,4 +522,29 @@ public class LecturerSignUpActivity extends AppCompatActivity {
         }
     }
 
+    private boolean validateCheckBox() {
+        if (!checkBox.isChecked()) {
+            // If the checkbox is not checked, show an error message
+            Toast.makeText(this, "Please agree to the terms and conditions.", Toast.LENGTH_SHORT).show();
+            return false; // Validation failed
+        } else {
+            checkBox.setFocusable(true);
+            return true; // Validation passed
+        }
+    }
+
 }
+
+//        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+//                new ActivityResultContracts.StartActivityForResult(),
+//                result -> {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//                        Intent data = result.getData();
+//                        assert data != null;
+//                        uri = data.getData();
+//                        upload_pics.setImageURI(uri);
+//                    } else {
+//                        Toast.makeText(LecturerSignUpActivity.this, "No Image Selected", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//        );

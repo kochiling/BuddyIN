@@ -44,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
             } else if (item == R.id.buddy) {
                 replaceFragment(new BuddyFragment());
             } else if (item == R.id.bot) {
-                replaceFragment(new ChatbotFragment());
+                replaceFragment(new );
             } else if (item == R.id.profile) {
                 replaceFragment(new ProfileFragment());
             }

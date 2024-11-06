@@ -135,8 +135,6 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setFragment(new SignUpRoleFragment());
-                //Intent intent = new Intent(requireActivity(), RegisterActivity.class);
-                //startActivity(intent);
             }
         });
 
@@ -174,7 +172,7 @@ public class LoginFragment extends Fragment {
                     } else {
                         // Login failed, hide the progress bar and show a message
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Wrong Email or Password", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -204,7 +202,6 @@ public class LoginFragment extends Fragment {
         email_input1.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         builder.setView(view);
 
-
         builder.setPositiveButton("Reset", (dialog, which) -> {
             String email_p = email_input1.getText().toString().trim();
 
@@ -231,7 +228,6 @@ public class LoginFragment extends Fragment {
         loadingBar.setMessage("Sending Email....");
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
-
         // calling sendPasswordResetEmail
         // open your email and write the new
         // password and then you can login
@@ -243,6 +239,14 @@ public class LoginFragment extends Fragment {
                 {
                     // if isSuccessful then done message will be shown
                     // and you can change the password
+                    // Build an AlertDialog
+                    new android.app.AlertDialog.Builder(getActivity())
+                            .setTitle("Reset Password")
+                            .setMessage("The reset password email has been sent to your mailbox. Please proceed to the mailbox to check on the password reset link.")
+                            .setCancelable(false)
+                            .setPositiveButton("OK", (dialog, which) -> {
+                            })
+                            .show();
                     Toast.makeText(getContext(),"Done sent",Toast.LENGTH_LONG).show();
                 }
                 else {

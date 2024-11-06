@@ -12,6 +12,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+
 public class MainActivity extends AppCompatActivity {
 
     FrameLayout parent_frameLayout;

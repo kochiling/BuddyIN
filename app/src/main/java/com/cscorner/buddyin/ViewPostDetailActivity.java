@@ -106,7 +106,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
         // Enable the Up button (back button)
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        //Get buddy id
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             userID = bundle.getString("userID");
@@ -416,6 +416,7 @@ public class ViewPostDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected (@NonNull MenuItem item){
         if (item.getItemId() == android.R.id.home) {// Handle the Up button click (e.g., navigate back)
             onBackPressed();
+            onDestroy();
             return true;
         }
         return super.onOptionsItemSelected(item);

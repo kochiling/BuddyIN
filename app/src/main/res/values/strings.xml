@@ -58,5 +58,6 @@
     <string name="buddy_request">Buddy Request</string>
     <string name="_99">99+</string>
     <string name="menu_refresh">"Refresh "</string>
+    <string name="no_buddy_request">No Buddy Request</string>
 
 </resources>
