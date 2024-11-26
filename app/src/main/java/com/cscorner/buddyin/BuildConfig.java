@@ -1,5 +1,5 @@
 package com.cscorner.buddyin;
 
 public class BuildConfig {
-    public static String apiKey = "AIzaSyCWfGszy9uK_sxee9SxWa1ATaXSrdUR1-8";
+    public static String apiKey = "Replace with your API key";
 }
