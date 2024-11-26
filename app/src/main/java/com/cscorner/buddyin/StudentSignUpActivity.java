@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -61,6 +62,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
     TextInputEditText nameinput,ageinput,seniorinput,hobbiesinput,personalitiesinput;
     AutoCompleteTextView genderinput,courseinput;
     CountryCodePicker nationalityinput;
+    TextView t_c;
 
     CheckBox checkBox;
     Button registerbtn;
@@ -124,6 +126,7 @@ public class StudentSignUpActivity extends AppCompatActivity {
         courseinputlayout = findViewById(R.id.courseinputlayout);
         nationalinputlayout = findViewById(R.id.nationalinputlayout);
         progressBar = findViewById(R.id.progressBar);
+        t_c = findViewById(R.id.t_c);
 
         //GenderType
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genderinput, R.layout.drop_down_item);
@@ -419,6 +422,14 @@ public class StudentSignUpActivity extends AppCompatActivity {
 
         upload_pics.setOnClickListener(view -> {
             showImagePicDialog();
+        });
+
+        t_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Terms_Condition.class);
+                startActivity(intent);
+            }
         });
     }
 

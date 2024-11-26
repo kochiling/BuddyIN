@@ -73,10 +73,10 @@ public class BuddyRecommendFragment extends Fragment {
 
         // Initialize Retrofit
         // Home
-//        Retrofit retrofit = new Retrofit.Builder()
-//                .baseUrl("http://192.168.0.115:5000") // Your Flask server URL
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.112:5000") // Your Flask server URL
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         // Initialize Retrofit
 //        // INTI
@@ -84,16 +84,15 @@ public class BuddyRecommendFragment extends Fragment {
 //                .baseUrl("http://10.3.240.238:5000") // Your Flask server URL
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
-        // Hotspot
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.20.48:5000") // Your Flask server URL
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-
-        http://192.168.20.48:5000
+//        // Hotspot
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://192.168.95.48:5000") // Your Flask server URL
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
 
         api = retrofit.create(BuddyMatchApi.class);
+
+
 
         // Call the method to make the request
         sendUserIdToServer();

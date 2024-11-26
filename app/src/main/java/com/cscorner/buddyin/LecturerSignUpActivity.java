@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -63,6 +64,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
     String imageURL;
     Uri uri;
     FirebaseAuth mAuth;
+    TextView t_c;
 
     private static final int IMAGEPICK_GALLERY_REQUEST = 300;
     private static final int IMAGE_PICKCAMERA_REQUEST = 400;
@@ -101,6 +103,7 @@ public class LecturerSignUpActivity extends AppCompatActivity {
         nameinputlayout = findViewById(R.id.nameinputlayout);
         facultyinputlayout = findViewById(R.id.facultyinputlayout);
         idinputlayout = findViewById(R.id.idinputlayout);
+        t_c = findViewById(R.id.t_c);
 
         //GenderType
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.facultyinput, R.layout.drop_down_item);
@@ -183,6 +186,14 @@ public class LecturerSignUpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // Not needed
+            }
+        });
+
+        t_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Terms_Condition.class);
+                startActivity(intent);
             }
         });
     }
