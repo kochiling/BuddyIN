@@ -26,6 +26,8 @@
     <string name="personalities">Personalities</string>
     <string name="nationality">Nationality</string>
     <string name="i_agree_to_the_terms_and_conditions">I agree to the Terms and Conditions</string>
+    <string name="i_agree_to_the">I agree to the</string>
+    <string name="terms_and_conditions"> <u>Terms and Conditions</u></string>
     <string name="register">Register</string>
     <string name="age">Age</string>
     <string name="notes_by_subject">Notes By Subject</string>
@@ -59,5 +61,6 @@
     <string name="_99">99+</string>
     <string name="menu_refresh">"Refresh "</string>
     <string name="no_buddy_request">No Buddy Request</string>
+    <string name="terms_conditions">Terms &amp; Conditions</string>
 
 </resources>

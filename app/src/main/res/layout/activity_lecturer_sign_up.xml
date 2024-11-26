@@ -209,17 +209,33 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/terms_checkbox"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="25dp"
-                android:text="@string/i_agree_to_the_terms_and_conditions"
-                tools:ignore="TextContrastCheck"
-                android:buttonTint="@color/white"
-                android:textColor="@color/black" />
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/terms_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginBottom="25dp"
+                    android:text="@string/i_agree_to_the"
+                    tools:ignore="TextContrastCheck"
+                    android:buttonTint="@color/white"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/t_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_and_conditions"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="25dp"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/registerbtn"
